@@ -222,7 +222,7 @@
   }
 
   .logout-button {
-    @apply bg-transparent text-black hover:bg-gray-500 hover:text-black;
+    @apply mx-5 bg-transparent text-black hover:bg-gray-500 hover:text-black;
   }
 
   .create-button {

@@ -7,7 +7,7 @@ import MDEditor from '@uiw/react-md-editor';
 import { Button } from './ui/button';
 import { Send } from 'lucide-react';
 import { formSchema } from '@/lib/create-form-validation';
-import { createArticleAction } from '@/actions/create-article-action';
+import { createArticleAction } from '@/actions/server-actions';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { toast } from 'sonner';

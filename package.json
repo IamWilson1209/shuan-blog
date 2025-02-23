@@ -35,6 +35,7 @@
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-intersection-observer": "^9.15.1",
     "sanity": "^3.75.0",
     "sanity-plugin-markdown": "^5.0.0",
     "server-only": "^0.0.1",

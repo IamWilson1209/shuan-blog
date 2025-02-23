@@ -12,8 +12,6 @@ const ArticlePage = ({ article }: { article: ArticlePageType }) => {
   const { title, author, category, _id, image, desc, views, _createdAt } =
     article;
 
-  console.log('desc: ', desc);
-
   return (
     <li className="article-page-card group">
       <div className="flex-between mt-5 gap-5">

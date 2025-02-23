@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
-export const ARTICLES_QUERY =
-  defineQuery(`*[_type == "article" && defined(slug.current) && !defined($sanityQuery) || title match $sanityQuery || category match $sanityQuery || author->name match $sanityQuery] | order(_createdAt desc) {
+export const GET_ARTICLES_QUERY =
+  defineQuery(`*[_type == "article" && defined(slug.current) && !defined($sanityQuery) || title match $sanityQuery || category match $sanityQuery || author->name match $sanityQuery] | order(_createdAt desc) [$start...$end] {
   _id, 
   title, 
   slug,
