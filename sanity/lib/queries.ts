@@ -25,7 +25,7 @@ export const GET_ARTICLE_BY_ID_QUERY =
     _id, name, username, image, bio
   }, 
   views,
-  description,
+  desc,
   category,
   image,
   content
@@ -69,7 +69,7 @@ export const GET_ARTICLES_BY_AUTHOR_QUERY = defineQuery(
     _id, name, image, bio
   }, 
   views,
-  description,
+  desc,
   category,
   image,
   }`)
@@ -92,7 +92,7 @@ export const GET_PLAYLIST_BY_SLUG_QUERY =
       bio
     },
     views,
-    description,
+    desc,
     category,
     image,
   }

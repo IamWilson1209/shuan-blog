@@ -4,6 +4,7 @@ import { writeClient } from '@/sanity/lib/write-client';
 import { after } from 'next/server';
 import React from 'react';
 import Ping from './Ping';
+import { Eye } from 'lucide-react';
 
 const Views = async ({ id }: { id: string }) => {
   const { views: totalViews } = await client
@@ -28,8 +29,9 @@ const Views = async ({ id }: { id: string }) => {
         <Ping />
       </div>
 
-      <p className="view-text">
-        <span className="font-black">Views: {totalViews}</span>
+      <p className="view-text flex items-center gap-2">
+        <Eye width={20} height={20} />
+        <span className="font-black">{totalViews}</span>
       </p>
     </div>
   );

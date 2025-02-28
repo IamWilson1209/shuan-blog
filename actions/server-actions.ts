@@ -5,6 +5,8 @@ import { parseServerActionResponse } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { GET_ARTICLES_QUERY } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";
+import { AnyTxtRecord } from "dns";
+import { revalidatePath } from "next/cache";
 import slugify from "slugify";
 
 export const createArticleAction = async (
@@ -21,7 +23,7 @@ export const createArticleAction = async (
     })
   }
 
-  const { title, description, category, link } = Object.fromEntries(
+  const { title, desc, category, link } = Object.fromEntries(
     Array.from(form).filter(([key]) => key !== "content"),
   );
 
@@ -30,7 +32,7 @@ export const createArticleAction = async (
   try {
     const article = {
       title,
-      description,
+      desc,
       category,
       image: link,
       slug: {
@@ -59,6 +61,26 @@ export const createArticleAction = async (
     })
   }
 
+}
+
+export const updateArticleAction = async (prevState: any, formData: FormData, content: string, articleId: string) => {
+  try {
+    const res = await writeClient.patch(articleId)
+      .set({
+        title: formData.get('title') as string,
+        desc: formData.get('desc') as string,
+        category: formData.get('category') as string,
+        link: formData.get('link') as string,
+        content,
+      }).commit()
+
+    revalidatePath(`/articles/${articleId}`);
+
+    return { status: 'Success', _id: res._id }
+  } catch (error) {
+    console.error("Error updating article", error);
+    return { status: 'Error', error: 'Error updating article' }
+  }
 }
 
 const MAX_LIMIT = 2

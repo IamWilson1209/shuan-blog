@@ -5,15 +5,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
+import { EditButton } from './EditButton';
 
 export type ArticlePageType = Omit<Article, 'author'> & { author?: Author };
 
-const ArticlePage = ({ article }: { article: ArticlePageType }) => {
+const ArticleCard = ({ article }: { article: ArticlePageType }) => {
   const { title, author, category, _id, image, desc, views, _createdAt } =
     article;
 
   return (
-    <li className="article-page-card group">
+    <li className="relative article-page-card group">
+      <div className="absolute top-5 right-5">
+        <EditButton id={_id} />
+      </div>
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/articles/${_id}`}>
@@ -61,7 +65,7 @@ const ArticlePage = ({ article }: { article: ArticlePageType }) => {
   );
 };
 
-export const ArticlePageSkeleton = () => (
+export const ArticleCardSkeleton = () => (
   <>
     {[0, 1, 2, 3, 4].map((index: number) => (
       <li key={cn('skeleton', index)}>
@@ -71,4 +75,4 @@ export const ArticlePageSkeleton = () => (
   </>
 );
 
-export default ArticlePage;
+export default ArticleCard;

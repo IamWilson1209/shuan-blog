@@ -16,11 +16,11 @@
   }
 
   .text-30-extrabold {
-    @apply text-[30px] font-extrabold text-white;
+    @apply text-[30px] font-extrabold text-black-100/80;
   }
 
   .text-30-bold {
-    @apply text-[30px] font-bold text-black;
+    @apply text-[40px] font-bold text-black-100/80;
   }
 
   .text-30-semibold {
@@ -28,7 +28,7 @@
   }
 
   .text-all-article {
-    @apply font-bold text-[30px] text-black;
+    @apply px-4 font-bold text-[50px] text-black;
   }
 
   .text-26-semibold {
@@ -37,6 +37,10 @@
 
   .text-24-black {
     @apply text-[24px] font-black text-black;
+  }
+
+  .text-24-medium {
+    @apply font-semibold text-[24px] text-black;
   }
 
   .text-20-medium {
@@ -48,7 +52,7 @@
   }
 
   .text-14-normal {
-    @apply font-normal text-sm text-white-100/80;
+    @apply font-normal text-sm text-black-100/80;
   }
 
   .global_background {
@@ -71,15 +75,23 @@
   }
 
   .tag {
-    @apply bg-secondary px-6 py-3 font-work-sans font-bold rounded-sm uppercase relative tag-tri;
+    @apply font-work-sans font-medium rounded-sm uppercase relative max-w-[300px];
   }
 
   .heading {
-    @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
+    @apply uppercase bg-black-200/70 px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
+  }
+
+  .heading-article {
+    @apply px-6 pt-3 font-work-sans font-bold text-black sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] mt-5 mb-1;
   }
 
   .sub-heading {
-    @apply font-medium text-[30px] text-white max-w-2xl text-center break-words;
+    @apply font-medium text-[30px] text-white-100/70 max-w-2xl break-words;
+  }
+
+  .sub-heading-article {
+    @apply font-semibold text-[30px] text-black-200/60 max-w-2xl break-words;
   }
 
   .idea {
@@ -90,12 +102,16 @@
     @apply px-6 py-10 max-w-7xl mx-auto;
   }
 
+  .section_container_article_page {
+    @apply px-6 max-w-7xl mx-auto;
+  }
+
   .card_grid {
     @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
   }
 
   .card_grid-sm {
-    @apply grid sm:grid-cols-2 gap-5;
+    @apply grid sm:grid-cols-2 gap-1;
   }
 
   .no-result {
@@ -108,15 +124,15 @@
   }
 
   .profile_card {
-    @apply w-80 px-6 pb-6 pt-20 flex flex-col justify-center items-center bg-primary border-[5px] border-black shadow-100 rounded-[30px] relative z-0 h-fit max-lg:w-full;
+    @apply w-96 px-6 pb-6 pt-20 flex flex-col justify-center items-center relative z-0 h-fit max-lg:w-full;
   }
 
   .profile_title {
-    @apply w-11/12 bg-white border-[5px] border-black rounded-[20px] px-5 py-3 absolute -top-9 after:absolute after:content-[''] after:-top-1 after:right-0 after:-skew-y-6 after:bg-black after:-z-[1] after:rounded-[20px] after:w-full after:h-[60px] before:absolute before:content-[''] before:-bottom-1 before:left-0  before:-skew-y-6 before:w-full before:h-[60px] before:bg-black  before:-z-[1] before:rounded-[20px] shadow-100;
+    @apply w-11/12 px-5 py-3 absolute;
   }
 
   .profile_image {
-    @apply rounded-full object-cover border-[3px] border-black;
+    @apply rounded-full object-cover border-[1px];
   }
 
   /* idea details */
@@ -156,7 +172,7 @@
 
   /* startupcard */
   .article-page-card {
-    @apply bg-white border-collapse py-6 px-5 rounded-[22px] hover:border-zinc-700 hover:bg-zinc-200 hover:scale-105 transition-all duration-500 ease-in-out;
+    @apply bg-white border-collapse py-6 px-6 rounded-[22px] hover:border-zinc-700 hover:bg-zinc-200 transition-all duration-500 ease-in-out;
   }
 
   .article-page-date {
@@ -180,45 +196,45 @@
   }
 
   /* startupform */
-  .startup-form {
-    @apply max-w-2xl mx-auto bg-white my-10 space-y-8 px-6;
+  .article-form {
+    @apply max-w-7xl mx-auto bg-white my-10 space-y-8 px-10;
   }
 
-  .startup-form_label {
+  .article-form_label {
     @apply font-bold text-[18px] text-black uppercase;
   }
 
-  .startup-form_input {
-    @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black-300 !important;
+  .article-form_input {
+    @apply border-[3px] border-black/50 px-5 py-7 text-[18px] text-black font-semibold rounded-md mt-3 placeholder:text-black-300 !important;
   }
 
-  .startup-form_textarea {
-    @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black-300 !important;
+  .article-form_textarea {
+    @apply border-[3px] border-black/50 p-5 text-[18px] text-black font-semibold rounded-sm mt-3 placeholder:text-black-300 !important;
   }
 
-  .startup-form_error {
+  .article-form_error {
     @apply text-red-500 mt-2 ml-5;
   }
 
-  .startup-form_editor {
+  .article-form_editor {
     @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300 !important;
   }
 
-  .startup-form_btn {
+  .article-form_btn {
     @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] !important;
   }
 
   /* view */
   .view-container {
-    @apply flex justify-end items-center mt-5 fixed bottom-3 right-3;
+    @apply flex justify-end items-center mt-5 fixed bottom-3 right-3 bg-zinc-300/80 rounded-md;
   }
 
   .view-text {
-    @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-lg capitalize;
+    @apply font-medium text-[16px] px-4 py-2 rounded-lg capitalize;
   }
 
   .category-tag {
-    @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-full;
+    @apply font-medium text-[20px] px-4 py-2 bg-black-300/40 text-black-200 rounded-sm;
   }
 
   .logout-button {

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
-import ArticlePage, { ArticlePageType } from './ArticlePage';
+import ArticlePage, { ArticlePageType } from './ArticleCard';
 import { fetchArticlesAction } from '@/actions/server-actions';
 
 interface LoadMoreProps {
@@ -25,12 +25,6 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
 
   useEffect(() => {
     if (inView && hasMore) {
-      console.log(
-        'Client: Fetching with page:',
-        pageRef.current,
-        'searchQuery:',
-        searchQuery
-      );
       setIsLoading(true);
 
       const delay = 500;
@@ -40,15 +34,8 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
             if (res.length === 0) {
               setHasMore(false);
             } else {
-              console.log(
-                'Client: Loaded page:',
-                pageRef.current,
-                'data:',
-                res
-              );
               setArticles((prev) => [...prev, ...res]);
               setPage((prev) => {
-                console.log('Client: Updating page from', prev, 'to', prev + 1);
                 return prev + 1;
               });
             }
@@ -64,7 +51,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
 
   return (
     <>
-      <ul className="mt-7 card_grid">
+      <ul className="mt-5 card_grid pb-8">
         {articles.length > 0 ? (
           articles.map((article: ArticlePageType) => (
             <ArticlePage key={article?._id} article={article} />
@@ -73,19 +60,24 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
           <p className="no-results">No articles found</p>
         )}
       </ul>
+      <hr />
       <section className="flex justify-center items-center w-full">
         <div ref={ref}>
           {inView && isLoading && (
             <Image
-              src="./spinner.svg"
+              src="./tube-spinner.svg"
               alt="spinner"
-              width={56}
-              height={56}
+              width={120}
+              height={120}
               className="object-contain"
             />
           )}
           {inView && !hasMore && (
-            <p className="text-center text-16-medium mt-7">No more articles</p>
+            <>
+              <p className="text-center text-[40px] font-bold text-black-200 mt-3">
+                No more articles
+              </p>
+            </>
           )}
         </div>
       </section>

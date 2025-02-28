@@ -4,46 +4,66 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'About Ex* | Ex*.com',
   description:
-    'Choosing a name like "Ex" for a logo infuses it with a wealth of positive connotations. Words beginning with "Ex" — such as education, excellence, expertise, extraordinary, and excitement — carry meanings of growth, superiority, and energy. This simple prefix suggests a brand that stands out, embodying qualities like knowledge and skill (education, expertise), exceptional achievement (excellence, extraordinary), and vibrant enthusiasm (excitement). It’s a compact yet powerful way to signal ambition and dynamism, aligning with a vision of innovation and leadership. In a competitive world, "Ex" offers a memorable hook that implies going beyond the ordinary, resonating with audiences who value progress and distinction. Thus, "Ex" not only enhances the logo’s appeal but also embeds it with layers of uplifting significance, making it an ideal choice for a forward-thinking identity.',
+    'Ex* is a public knowledge playground where you can explore content shared by others, gain valuable knowledge, and even contribute your own ideas, experiences, or expertise to the public. Join us and start your journey by creating!',
   icons: { icon: '/Ex-meta-v3.png' },
 };
 
 const AboutPage = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-r from-blue-100 to-pink-100 py-12 px-6 animate-gradient">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-black mb-8 text-center animate-fade-in">
-          Why "Ex*"?
-        </h1>
-        <div className="flex justify-center mb-6">
+    <section className="min-h-screen bg-gradient-to-r from-purple-100 to-indigo-100 py-16 px-6 animate-gradient">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-16">
+          <h1 className="text-5xl md:text-6xl font-bold text-black mb-12 text-center animate-fade-in">
+            What is Ex*?
+          </h1>
+          <div className="bg-white shadow-lg rounded-lg p-8 md:p-12 transform transition-all hover:scale-105 duration-300 ease-in-out">
+            <p className="text-xl font-work-sans md:text-2xl text-gray-700 leading-relaxed">
+              Ex* is a{' '}
+              <span className="font-semibold text-purple-600 animate-pulse">
+                public knowledge playground
+              </span>{' '}
+              where you can explore content shared by others, gain valuable
+              knowledge, and even contribute your own ideas, experiences, or
+              expertise to the public. To strengthen this community, start your
+              journey by creating!
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h1 className="text-5xl md:text-6xl font-bold text-black mb-12 text-center animate-fade-in">
+            Why Ex*?
+          </h1>
+          <div className="bg-white shadow-lg rounded-lg p-8 md:p-12 transform transition-all hover:scale-105 duration-300 ease-in-out">
+            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
+              The{' '}
+              <span className="font-semibold text-purple-600 animate-pulse">
+                *
+              </span>{' '}
+              invites you to fill in any word starting with{' '}
+              <span className="font-semibold text-indigo-600">Ex</span> that
+              resonates with you. To me, Ex is a special prefix, sparking
+              countless positive adjectives like <em>extraordinary</em>,{' '}
+              <em>excellent</em>, and <em>exceptional</em>. Though there are
+              also words with some ordinary meanings—<em>expired</em>,{' '}
+              <em>ex-girlfriend</em>, or <em>ex-boyfriend</em>,{' '}
+              <span className="font-semibold text-purple-600 animate-pulse">
+                Ex* is yours to define.
+              </span>{' '}
+              By using this platform thoughtfully, you can transform Ex* into a
+              force for good and unlock its potential to inspire and support
+              you. Let’s get started!
+            </p>
+          </div>
+        </div>
+
+        {/* Logo 展示 */}
+        <div className="flex justify-center mt-16">
           <img
             src="/Ex-meta.png"
             alt="Ex Logo"
-            className="w-24 h-24 rounded-md hover:scale-110 transition-transform duration-300 ease-in-out"
+            className="w-32 h-32 rounded-md hover:scale-110 transition-transform duration-300 ease-in-out"
           />
-        </div>
-        <div className="bg-white shadow-lg rounded-lg p-6 md:p-8">
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-            Choosing a name like{' '}
-            <span className="font-semibold text-blue-600 animate-pulse">
-              "Ex"
-            </span>{' '}
-            for a logo infuses it with a wealth of positive connotations. Words
-            beginning with "Ex" — such as <em>education</em>,{' '}
-            <em>excellence</em>, <em>expertise</em>, <em>extraordinary</em>, and{' '}
-            <em>excitement</em> — carry meanings of growth, superiority, and
-            energy. This simple prefix suggests a brand that stands out,
-            embodying qualities like knowledge and skill (<em>education</em>,{' '}
-            <em>expertise</em>), exceptional achievement (<em>excellence</em>,{' '}
-            <em>extraordinary</em>), and vibrant enthusiasm (<em>excitement</em>
-            ). It’s a compact yet powerful way to signal ambition and dynamism,
-            aligning with a vision of innovation and leadership. In a
-            competitive world, "Ex" offers a memorable hook that implies going
-            beyond the ordinary, resonating with audiences who value progress
-            and distinction. Thus, "Ex" not only enhances the logo’s appeal but
-            also embeds it with layers of uplifting significance, making it an
-            ideal choice for a forward-thinking identity.
-          </p>
         </div>
       </div>
     </section>

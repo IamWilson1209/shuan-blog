@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import ArticleForm from '@/components/ArticleForm';
+import ArticleEditForm from '@/components/ArticleEditForm';
 import { redirect } from 'next/navigation';
 
 const CreatePage = async () => {
@@ -9,11 +9,15 @@ const CreatePage = async () => {
 
   return (
     <>
-      <section className="global_background !min-h-[230px]">
-        <h1 className="heading">Share Your Article</h1>
+      <section className="container mx-auto p-4">
+        <h1 className="my-5 text-center text-[50px] font-extrabold font-work-sans text-black-800">
+          Create Your Article
+        </h1>
       </section>
 
-      <ArticleForm />
+      <hr />
+
+      <ArticleEditForm />
     </>
   );
 };
