@@ -33,7 +33,7 @@ const Navbar = async () => {
           </Button>
           {session && session?.user ? (
             <>
-              <Link href="/articles/create">
+              <Link href={`/articles/create`}>
                 <Button className="create-button max-md:hidden">Create</Button>
                 <Plus className="size-8 mx-2 bg-black-200 text-white-100 rounded-full p-1 border-black hover:bg-zinc-100 hover:text-black-200 md:hidden transition-colors duration-500" />
               </Link>

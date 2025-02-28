@@ -3,9 +3,8 @@
 import { auth } from "@/auth"
 import { parseServerActionResponse } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
-import { GET_ARTICLES_QUERY } from "@/sanity/lib/queries";
+import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLES_QUERY } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";
-import { AnyTxtRecord } from "dns";
 import { revalidatePath } from "next/cache";
 import slugify from "slugify";
 
@@ -65,6 +64,25 @@ export const createArticleAction = async (
 
 export const updateArticleAction = async (prevState: any, formData: FormData, content: string, articleId: string) => {
   try {
+
+    const session = await auth();
+
+    if (!session) {
+      return parseServerActionResponse({
+        error: "Unauthenticated",
+        status: "Error"
+      })
+    }
+
+    const article = await client.fetch(GET_ARTICLE_BY_ID_QUERY, { id: articleId });
+
+    if (session.id !== article.author._id) {
+      return parseServerActionResponse({
+        error: "Unauthenticated",
+        status: "Error"
+      })
+    }
+
     const res = await writeClient.patch(articleId)
       .set({
         title: formData.get('title') as string,
@@ -80,6 +98,35 @@ export const updateArticleAction = async (prevState: any, formData: FormData, co
   } catch (error) {
     console.error("Error updating article", error);
     return { status: 'Error', error: 'Error updating article' }
+  }
+}
+
+export const deleteArticleAction = async (articleId: string) => {
+  try {
+
+    const session = await auth();
+
+    if (!session) {
+      return parseServerActionResponse({
+        error: "Unauthenticated",
+        status: "Error"
+      })
+    }
+
+    const article = await client.fetch(GET_ARTICLE_BY_ID_QUERY, { id: articleId });
+
+    if (session.id !== article.author._id) {
+      return parseServerActionResponse({
+        error: "Unauthenticated",
+        status: "Error"
+      })
+    }
+
+    const res = await writeClient.delete(articleId)
+    return { status: 'Success', _id: res._id }
+  } catch (error) {
+    console.error("Error deleting article", error);
+    return { status: 'Error', error: 'Error deleting article' }
   }
 }
 

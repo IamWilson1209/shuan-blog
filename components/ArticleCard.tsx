@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
 import { EditButton } from './EditButton';
+import { deleteArticleAction } from '@/actions/server-actions';
 
 export type ArticlePageType = Omit<Article, 'author'> & { author?: Author };
 
@@ -16,7 +17,11 @@ const ArticleCard = ({ article }: { article: ArticlePageType }) => {
   return (
     <li className="relative article-page-card group">
       <div className="absolute top-5 right-5">
-        <EditButton id={_id} />
+        <EditButton
+          id={_id}
+          deleteArticleAction={deleteArticleAction}
+          authorId={author?._id}
+        />
       </div>
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">

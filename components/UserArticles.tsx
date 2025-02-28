@@ -4,7 +4,9 @@ import React from 'react';
 import ArticleCard, { ArticlePageType } from './ArticleCard';
 
 const UserArticles = async ({ id }: { id: string }) => {
-  const userArticles = await client.fetch(GET_ARTICLES_BY_AUTHOR_QUERY, { id });
+  const userArticles = await client
+    .withConfig({ useCdn: false })
+    .fetch(GET_ARTICLES_BY_AUTHOR_QUERY, { id });
   return (
     <>
       {userArticles.length > 0 ? (

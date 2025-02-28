@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import {
@@ -6,10 +8,45 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Ellipsis } from 'lucide-react';
+import { useState, useTransition } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { toast } from 'sonner'; // 可選：用於顯示提示
 
-export const EditButton = ({ id }: { id: string }) => {
+export const EditButton = ({
+  id,
+  deleteArticleAction,
+  authorId,
+}: {
+  id: string;
+  deleteArticleAction: (id: string) => Promise<any>;
+  authorId: string | undefined;
+}) => {
+  const [isPending, setIsPending] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    setIsPending(true);
+    try {
+      const result = await deleteArticleAction(id);
+      if (result.status === 'Success') {
+        setIsOpen(false);
+        router.push(`/users/${authorId}`);
+        toast('Success!!', {
+          description: 'Your article has been deleted successfully',
+        });
+      }
+    } catch (error) {
+      toast('Something went wrong!!', {
+        description: 'Please check your inputs and try again',
+      });
+    } finally {
+      setIsPending(false);
+    }
+  };
+
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger>
         <Ellipsis />
       </PopoverTrigger>
@@ -21,8 +58,10 @@ export const EditButton = ({ id }: { id: string }) => {
           <Button
             variant="destructive"
             className="bg-red-900 text-white font-work-sans"
+            onClick={handleDelete}
+            disabled={isPending}
           >
-            <Link href={`/articles/edit/${id}`}>Delete</Link>
+            {isPending ? 'Deleting...' : 'Delete'}
           </Button>
         </div>
       </PopoverContent>
