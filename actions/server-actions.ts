@@ -1,7 +1,7 @@
 "use server"
 
 import { auth } from "@/auth"
-import { parseServerActionResponse } from "@/lib/utils";
+import { parseServerActionResponse } from "@/utils/utils";
 import { client } from "@/sanity/lib/client";
 import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_ARTICLES_SAVE_STATUS_BY_USER_ID } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";

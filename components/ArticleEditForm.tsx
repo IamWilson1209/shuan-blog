@@ -6,7 +6,7 @@ import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
 import { Button } from './ui/button';
 import { Send } from 'lucide-react';
-import { formSchema } from '@/lib/create-form-validation';
+import { formSchema } from '@/schema/article-edit-form-validation';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { toast } from 'sonner';

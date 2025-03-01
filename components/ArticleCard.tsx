@@ -1,6 +1,6 @@
 'use client';
 
-import { cn, formatDate } from '@/lib/utils';
+import { cn, formatDate } from '@/utils/utils';
 import { Article, Author } from '@/sanity/types';
 import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';

@@ -1,4 +1,4 @@
-import { formatDate } from '@/lib/utils';
+import { formatDate } from '@/utils/utils';
 import { client } from '@/sanity/lib/client';
 import {
   GET_ARTICLE_BY_ID_QUERY,
