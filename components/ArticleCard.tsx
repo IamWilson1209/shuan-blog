@@ -1,3 +1,5 @@
+'use client';
+
 import { cn, formatDate } from '@/lib/utils';
 import { Article, Author } from '@/sanity/types';
 import { EyeIcon } from 'lucide-react';
@@ -7,20 +9,32 @@ import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
 import { EditButton } from './EditButton';
 import { deleteArticleAction } from '@/actions/server-actions';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export type ArticlePageType = Omit<Article, 'author'> & { author?: Author };
 
-const ArticleCard = ({ article }: { article: ArticlePageType }) => {
+const ArticleCard = ({
+  article,
+  userId,
+  initialSavedStatus,
+}: {
+  article: ArticlePageType;
+  userId?: string;
+  initialSavedStatus: boolean;
+}) => {
+  noStore(); // 確保資料即時更新
   const { title, author, category, _id, image, desc, views, _createdAt } =
     article;
 
   return (
     <li className="relative article-page-card group">
-      <div className="absolute top-5 right-5">
+      <div className="absolute top-2 right-5">
         <EditButton
           id={_id}
-          deleteArticleAction={deleteArticleAction}
           authorId={author?._id}
+          deleteArticleAction={deleteArticleAction}
+          userId={userId}
+          initialSavedStatus={initialSavedStatus}
         />
       </div>
       <div className="flex-between mt-5 gap-5">
@@ -44,7 +58,6 @@ const ArticleCard = ({ article }: { article: ArticlePageType }) => {
           />
         </Link>
       </div>
-
       <div className="flex-between mt-5">
         <p className="article-page-date">{formatDate(_createdAt)}</p>
         <div className="flex gap-1.5">
@@ -52,12 +65,10 @@ const ArticleCard = ({ article }: { article: ArticlePageType }) => {
           <span className="text-16-medium">{views}</span>
         </div>
       </div>
-
       <Link href={`/articles/${_id}`}>
         <p className="article-page-desc">{desc}</p>
         <img src={image} alt="placeholder" className="article-page-img" />
       </Link>
-
       <div className="flex-between gap-3 mt-5">
         <Link href={`/?query=${category?.toLowerCase()}`}>
           <p className="text-16-medium">Category : {category}</p>

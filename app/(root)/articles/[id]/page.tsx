@@ -12,12 +12,22 @@ import Views from '@/components/Views';
 import { notFound } from 'next/navigation';
 import markdownit from 'markdown-it';
 import { Timer } from 'lucide-react';
+import { auth } from '@/auth';
+import { getSavedStatus } from '@/actions/server-actions';
+import SaveButton from '@/components/SaveButton';
 
 const md = markdownit();
 export const experimental_ppr = true;
 
 const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
+  const session = await auth();
+  const currentUserId = session?.id || null;
+  const isLoggedIn = !!currentUserId;
+
+  const initialSavedStatus = isLoggedIn
+    ? await getSavedStatus(currentUserId, id)
+    : false;
 
   /* 
     Docs: https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#parallel-and-sequential-data-fetching
@@ -33,6 +43,7 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const parsedContent = md.render(article?.content || '');
 
   if (!article) return notFound();
+
   return (
     <>
       <section className="flex flex-col items-start mt-5 max-w-7xl mx-auto">
@@ -68,7 +79,16 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
             </Link>
 
-            <p className="category-tag">{article.category}</p>
+            <div className="flex gap-3 items-center">
+              <p className="category-tag"># {article.category}</p>
+              <SaveButton
+                onlyIcon={false}
+                articleId={id}
+                userId={currentUserId}
+                initialSavedStatus={initialSavedStatus}
+                isLoggedIn={isLoggedIn}
+              />
+            </div>
           </div>
           <hr className="mt-8" />
           <img

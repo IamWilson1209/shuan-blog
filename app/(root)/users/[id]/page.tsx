@@ -1,6 +1,9 @@
 import { auth } from '@/auth';
 import { client } from '@/sanity/lib/client';
-import { GET_AUTHOR_BY_ID_QUERY } from '@/sanity/lib/queries';
+import {
+  GET_ARTICLES_SAVE_STATUS_BY_USER_ID,
+  GET_AUTHOR_BY_ID_QUERY,
+} from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 import Image from 'next/image';
@@ -10,9 +13,24 @@ import UserArticles from '@/components/UserArticles';
 const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
   const session = await auth();
+  const userId = session?.id;
 
-  const user = await client.fetch(GET_AUTHOR_BY_ID_QUERY, { id });
+  // 並行查詢使用者資料和當前使用者的儲存文章
+  const [user, savedArticlesArray] = await Promise.all([
+    client.fetch(GET_AUTHOR_BY_ID_QUERY, { id }),
+    userId
+      ? client.fetch(GET_ARTICLES_SAVE_STATUS_BY_USER_ID, { userId })
+      : Promise.resolve({ savedArticles: [] }),
+  ]);
+  // const user = await client.fetch(GET_AUTHOR_BY_ID_QUERY, { id });
   if (!user) return notFound();
+
+  // 將 savedArticles 轉為 Set 以便快速查找
+  const savedArticleIds = new Set(
+    savedArticlesArray.savedArticles?.map(
+      (ref: { _ref: string }) => ref._ref
+    ) || []
+  );
   return (
     <section className="profile_container">
       <div className="profile_card">
@@ -42,7 +60,11 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <hr className="my-4 border-black-100/20" />
         <ul className="card_grid-sm">
           <Suspense fallback={<ArticleCardSkeleton />}>
-            <UserArticles id={id} />
+            <UserArticles
+              id={id}
+              userId={userId}
+              savedArticleIds={savedArticleIds}
+            />
           </Suspense>
         </ul>
       </div>

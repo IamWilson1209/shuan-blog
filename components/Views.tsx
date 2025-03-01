@@ -31,7 +31,7 @@ const Views = async ({ id }: { id: string }) => {
 
       <p className="view-text flex items-center gap-2">
         <Eye width={20} height={20} />
-        <span className="font-black">{totalViews}</span>
+        <span>{totalViews}</span>
       </p>
     </div>
   );

@@ -182,6 +182,13 @@ export type Author = {
   email?: string;
   image?: string;
   bio?: string;
+  savedArticles?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "article";
+  }>;
 };
 
 export type Markdown = string;

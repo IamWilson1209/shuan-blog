@@ -31,6 +31,12 @@ export const authorType = defineType({
       name: 'bio',
       type: 'text',
     }),
+    defineField({
+      name: 'savedArticles',
+      title: 'Saved Articles',
+      type: 'array',
+      of: [{ type: 'reference', to: { type: 'article' } }],
+    }),
   ],
   preview: {
     select: {

@@ -42,6 +42,10 @@ export const GET_AUTHOR_BY_ID_QUERY =
   bio,
 }`);
 
+export const GET_ARTICLES_SAVE_STATUS_BY_USER_ID = defineQuery(
+  `*[_type == "author" && _id == $userId][0]{savedArticles}`
+)
+
 export const GET_AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`
   *[_type == "author" && id == $id][0]{
       _id,

@@ -3,7 +3,7 @@
 import { auth } from "@/auth"
 import { parseServerActionResponse } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
-import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLES_QUERY } from "@/sanity/lib/queries";
+import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_ARTICLES_SAVE_STATUS_BY_USER_ID } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";
 import { revalidatePath } from "next/cache";
 import slugify from "slugify";
@@ -130,7 +130,7 @@ export const deleteArticleAction = async (articleId: string) => {
   }
 }
 
-const MAX_LIMIT = 2
+const MAX_LIMIT = 10
 export const fetchArticlesAction = async (page: number, sanityQuery?: string | string[] | null | undefined) => {
   const start = (page - 1) * MAX_LIMIT;
   const end = page * MAX_LIMIT;
@@ -141,10 +141,51 @@ export const fetchArticlesAction = async (page: number, sanityQuery?: string | s
       end,
       sanityQuery: sanityQuery || null,
     });
-    console.log(`Server: Fetched page ${page}:`, articles);
     return articles;
   } catch (error) {
     console.error(`Server: Error fetching page ${page}:`, error);
     throw error;
   }
+}
+
+export const toggleSaveArticle = async (userId: string | null | undefined, articleId: string) => {
+  if (!userId || !articleId) {
+    throw new Error('Missing key arguments');
+  }
+
+  const user = await client.withConfig({ useCdn: false }).fetch(
+    GET_ARTICLES_SAVE_STATUS_BY_USER_ID,
+    { userId }
+  );
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const savedArticles = user.savedArticles || [];
+  const isSaved = savedArticles.some((ref: { _ref: any; }) => ref._ref === articleId);
+
+  if (isSaved) {
+    await writeClient
+      .patch(userId)
+      .unset([`savedArticles[_ref == "${articleId}"]`])
+      .commit();
+    return { isSaved: false };
+  } else {
+    await writeClient
+      .patch(userId)
+      .setIfMissing({ savedArticles: [] })
+      .append('savedArticles', [{ _type: 'reference', _ref: articleId }])
+      .commit();
+    return { isSaved: true };
+  }
+}
+
+export const getSavedStatus = async (userId: string, articleId: string) => {
+  const user = await client.fetch(
+    GET_ARTICLES_SAVE_STATUS_BY_USER_ID,
+    { userId }
+  );
+  const savedArticles = user?.savedArticles || [];
+  return savedArticles.some((ref: { _ref: string; }) => ref._ref === articleId);
 }

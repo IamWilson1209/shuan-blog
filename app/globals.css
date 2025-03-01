@@ -224,17 +224,16 @@
     @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] !important;
   }
 
-  /* view */
   .view-container {
     @apply flex justify-end items-center mt-5 fixed bottom-3 right-3 bg-black-200 rounded-md;
   }
 
   .view-text {
-    @apply font-medium text-[16px] text-white px-4 py-2 rounded-lg capitalize;
+    @apply font-medium text-white px-4 py-2 rounded-lg capitalize;
   }
 
   .category-tag {
-    @apply font-medium text-[20px] px-4 py-2 bg-black-300/40 text-black-200 rounded-sm;
+    @apply font-normal text-[15px] px-5 py-3 bg-black-200 text-white rounded-sm;
   }
 
   .logout-button {

@@ -42,7 +42,12 @@ const ArticleEditForm = ({ article }: { article?: ArticlePageType }) => {
 
       const action = article ? updateArticleAction : createArticleAction;
 
-      const res = await action(prevState, formData, content, article?._id);
+      const res = await action(
+        prevState,
+        formData,
+        content,
+        article?._id || ''
+      );
 
       if (res.status === 'Success') {
         const isEdit = !!article;
