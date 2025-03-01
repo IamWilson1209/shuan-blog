@@ -17,7 +17,7 @@ const Navbar = async () => {
 
         <div className="flex items-center text-black">
           <Button variant="ghost" className="max-md:hidden" asChild>
-            <Link href="/author">
+            <Link href="/contact">
               <p className="bg-white p-2 text-16-medium hover:bg-black-100 hover:text-white-100 transition-colors duration-300">
                 Contact me
               </p>
