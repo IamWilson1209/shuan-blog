@@ -8,9 +8,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Ellipsis } from 'lucide-react';
-import { useState, useTransition } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { toast } from 'sonner'; // 可選：用於顯示提示
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export const EditButton = ({
   id,
