@@ -24,7 +24,7 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
     Parallel data fetching
   */
   const [article] = await Promise.all([
-    client.fetch(GET_ARTICLE_BY_ID_QUERY, { id }),
+    client.withConfig({ useCdn: false }).fetch(GET_ARTICLE_BY_ID_QUERY, { id }),
     // client.fetch(GET_PLAYLIST_BY_SLUG_QUERY, {
     //   slug: 'user-playlist',
     // }),
