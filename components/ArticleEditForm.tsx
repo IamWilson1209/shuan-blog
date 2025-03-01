@@ -46,13 +46,8 @@ const ArticleEditForm = ({ article }: { article?: ArticlePageType }) => {
 
       if (res.status === 'Success') {
         const isEdit = !!article;
-        toast(
-          isEdit ? 'Article has been updated' : 'Article has been created',
-          {
-            description: isEdit
-              ? 'Your article has been updated successfully'
-              : 'Your article has been created successfully',
-          }
+        toast.success(
+          isEdit ? 'Article has been updated' : 'Article has been created'
         );
 
         if (!isEdit) {
@@ -68,9 +63,7 @@ const ArticleEditForm = ({ article }: { article?: ArticlePageType }) => {
       if (error instanceof z.ZodError) {
         const fieldErrors = error.flatten().fieldErrors;
         setErrors(fieldErrors as unknown as Record<string, string>);
-        toast('Something went wrong!!', {
-          description: 'Please check your inputs and try again',
-        });
+        toast.error('Something went wrong!!');
         return { ...prevState, error: 'Validation failed', status: 'ERROR' };
       }
     }

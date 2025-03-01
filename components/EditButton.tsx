@@ -32,14 +32,10 @@ export const EditButton = ({
       if (result.status === 'Success') {
         setIsOpen(false);
         router.push(`/users/${authorId}`);
-        toast('Success!!', {
-          description: 'Your article has been deleted successfully',
-        });
+        toast.success('Article has been created');
       }
     } catch (error) {
-      toast('Something went wrong!!', {
-        description: 'Please check your inputs and try again',
-      });
+      toast.error('Event has not been created');
     } finally {
       setIsPending(false);
     }

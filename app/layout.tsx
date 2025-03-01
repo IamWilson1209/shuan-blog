@@ -73,7 +73,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${workSans.variable} `}>
         {children}
-        <Toaster />
+        <Toaster position="bottom-left" closeButton richColors />
       </body>
     </html>
   );
