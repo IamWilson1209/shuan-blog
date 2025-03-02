@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import 'easymde/dist/easymde.min.css';
 import { Toaster } from 'sonner';
 import { SessionProvider } from 'next-auth/react';
+import { ThemeProvider } from 'next-themes';
 
 const workSans = localFont({
   src: [
@@ -59,7 +60,7 @@ const workSans = localFont({
 export const metadata: Metadata = {
   title: "Shuan's Blog",
   icons: {
-    icon: '/Ex-meta-v3.png',
+    icon: '/Ex.png',
   },
   description:
     "Welcome to Shuan's personal blog, find out more about me and my articles here!!",
@@ -73,10 +74,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.variable} `}>
-        <SessionProvider>
-          {children}
-          <Toaster position="bottom-left" closeButton richColors />
-        </SessionProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>
+            {children}
+            <Toaster position="bottom-left" closeButton richColors />
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

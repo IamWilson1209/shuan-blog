@@ -48,7 +48,9 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <p className="text-30-extrabold text-center">@{user?.username}</p>
         <p className="text-20-medium text-center">{user?.email}</p>
-        <p className="mt-1 text-center text-14-normal">{user?.bio}</p>
+        <p className="mt-1 text-center text-14-normal dark:text-white-100/80">
+          {user?.bio}
+        </p>
       </div>
 
       <div className="flex-1 flex flex-col lg:-mt-5">
@@ -72,12 +74,22 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
 const ArticleLoading = () => {
   return (
-    <Image
-      src={'/fade-stagger-circles.svg'}
-      alt="Loading"
-      width={120}
-      height={120}
-    />
+    <div className="flex justify-center items-center">
+      <Image
+        src="/fade-stagger-circles.svg" // Light Mode 圖片
+        alt="Loading"
+        width={120}
+        height={120}
+        className="block dark:hidden" // Light Mode 可見，Dark Mode 隱藏
+      />
+      <Image
+        src="/fade-stagger-squares.svg" // Dark Mode 圖片
+        alt="Loading"
+        width={120}
+        height={120}
+        className="hidden dark:block" // Dark Mode 可見，Light Mode 隱藏
+      />
+    </div>
   );
 };
 

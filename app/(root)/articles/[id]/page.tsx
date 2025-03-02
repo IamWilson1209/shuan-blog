@@ -50,7 +50,10 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <h1 className="heading-article">{article.title}</h1>
         <p className="px-6 sub-heading-article !max-w-5xl">{article.desc}</p>
         <div className="flex items-start gap-2 px-6 mt-1">
-          <Timer className="pb-1 text-black-100/80" strokeWidth={3} />
+          <Timer
+            className="pb-1 text-black-100/80 dark:text-white-100"
+            strokeWidth={3}
+          />
           <p className="tag">{formatDate(article?._createdAt)}</p>
         </div>
       </section>
@@ -101,11 +104,13 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           {parsedContent ? (
             <article
-              className="prose max-w-4xl font-work-sans break-all"
+              className="prose max-w-4xl font-work-sans break-all dark:text-white-100/70"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (
-            <p className="no-result">No details provided</p>
+            <p className="no-result dark:text-white-100/80">
+              No details provided
+            </p>
           )}
         </div>
 

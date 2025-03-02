@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useActionState } from 'react';
+import React, { useState, useActionState, useEffect } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
@@ -21,12 +21,37 @@ const ArticleEditForm = ({ article }: { article?: ArticlePageType }) => {
   const [content, setContent] = useState(article?.content || '');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [previewUrl, setPreviewUrl] = useState<string>(article?.image || '');
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   const router = useRouter();
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
     setPreviewUrl(url);
   };
+
+  useEffect(() => {
+    // 初始檢查
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+    // 監聽暗黑模式變化
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkDarkMode();
+        }
+      });
+    });
+    // 開始監聽
+    observer.observe(document.documentElement, {
+      attributes: true, // 監聽屬性變化
+    });
+    // 初始檢查
+    checkDarkMode();
+    // 清理
+    return () => observer.disconnect();
+  }, []);
 
   const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
@@ -156,34 +181,36 @@ const ArticleEditForm = ({ article }: { article?: ArticlePageType }) => {
         />
         {errors.link && <p className="article-form_error">{errors.link}</p>}
       </div>
-      <div data-color-mode="light">
+      <div>
         <label htmlFor="content" className="article-form_label">
           Content
         </label>
-        <MDEditor
-          value={content}
-          onChange={(value) => setContent(value as string)}
-          id="content"
-          preview="edit"
-          height={500}
-          style={{ borderRadius: 20, overflow: 'hidden' }}
-          textareaProps={{
-            placeholder:
-              'Briefly share what you learn or describle your idea!!',
-          }}
-          previewOptions={{
-            disallowedElements: ['style'],
-          }}
-          visibleDragbar={true}
-        />
-        {errors.content && (
-          <p className="article-form_error">{errors.content}</p>
-        )}
+        <div data-color-mode={isDarkMode ? 'dark' : 'light'} className="mt-4">
+          <MDEditor
+            value={content}
+            onChange={(value) => setContent(value as string)}
+            id="content"
+            preview="edit"
+            height={500}
+            style={{ borderRadius: 20, overflow: 'hidden' }}
+            textareaProps={{
+              placeholder:
+                'Briefly share what you learn or describle your idea!!',
+            }}
+            previewOptions={{
+              disallowedElements: ['style'],
+            }}
+            visibleDragbar={true}
+          />
+          {errors.content && (
+            <p className="article-form_error">{errors.content}</p>
+          )}
+        </div>
       </div>
 
       <Button
         type="submit"
-        className="bg-black text-white min-w-full min-h-10"
+        className="bg-black dark:bg-amber-500/80 dark:text-white text-white min-w-full min-h-10"
         disabled={isPending}
       >
         {isPending && <p className="article-form_pending">Loading...</p>}

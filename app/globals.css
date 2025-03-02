@@ -16,39 +16,39 @@
   }
 
   .text-30-extrabold {
-    @apply text-[30px] font-extrabold text-black-100/80;
+    @apply text-[30px] font-extrabold text-black-100/80 dark:text-white-100/80;
   }
 
   .text-30-bold {
-    @apply text-[40px] font-bold text-black-100/80;
+    @apply text-[40px] font-bold text-black-100/80 dark:text-white-100/80;
   }
 
   .text-30-semibold {
-    @apply font-semibold text-[30px] text-black;
+    @apply font-semibold text-[30px] text-black dark:text-white-100/80;
   }
 
   .text-all-article {
-    @apply px-4 font-bold text-[50px] text-black;
+    @apply px-4 font-bold text-[50px] text-black dark:text-white-100/70;
   }
 
   .text-26-semibold {
-    @apply font-semibold text-[26px] text-black;
+    @apply font-semibold text-[26px] text-black dark:text-white-100/80;
   }
 
   .text-24-black {
-    @apply text-[24px] font-black text-black;
+    @apply text-[24px] font-black text-black dark:text-white-100/80;
   }
 
   .text-24-medium {
-    @apply font-semibold text-[24px] text-black;
+    @apply font-semibold text-[24px] text-black dark:text-white-100/80;
   }
 
   .text-20-medium {
-    @apply font-medium text-[20px] text-black;
+    @apply font-medium text-[20px] text-black dark:text-white-100/80;
   }
 
   .text-16-medium {
-    @apply font-medium text-[16px] text-black;
+    @apply font-medium text-[16px] text-black dark:text-white-100/80;
   }
 
   .text-14-normal {
@@ -129,7 +129,7 @@
   }
 
   .heading-article {
-    @apply px-6 pt-3 font-work-sans font-bold text-black sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] mt-5 mb-1;
+    @apply px-6 pt-3 font-work-sans font-bold text-black dark:text-white-100/90 sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] mt-5 mb-1;
   }
 
   .sub-heading {
@@ -137,7 +137,7 @@
   }
 
   .sub-heading-article {
-    @apply font-semibold text-[30px] text-black-200/60 max-w-2xl break-words;
+    @apply font-semibold text-[30px] text-black-200/60 dark:text-white-100/60 max-w-2xl break-words;
   }
 
   .idea {
@@ -205,11 +205,11 @@
 
   /* searchform */
   .search-form {
-    @apply max-w-3xl w-full min-h-[80px] bg-white border-[4px] border-white-100 rounded-[10px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
+    @apply max-w-3xl w-full min-h-[80px] bg-white dark:border-black-100/25 border-[4px] border-white-100 dark:bg-zinc-800 rounded-[10px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
   }
 
   .search-input {
-    @apply flex-1 font-bold placeholder:font-semibold placeholder:text-black-100 w-full h-auto outline-none;
+    @apply flex-1 font-bold placeholder:font-semibold placeholder:text-black-100 dark:bg-zinc-800 dark:placeholder:text-white-100/80 dark:placeholder:bg-zinc-800 w-full h-auto outline-none;
   }
 
   .search-btn {
@@ -218,7 +218,7 @@
 
   /* startupcard */
   .article-page-card {
-    @apply bg-white border-collapse py-6 px-6 rounded-[22px] hover:border-zinc-700 hover:bg-zinc-200 transition-all duration-500 ease-in-out;
+    @apply bg-white dark:bg-zinc-900 dark:text-white-100/80 border-collapse py-6 px-6 rounded-[22px] hover:border-zinc-700 hover:bg-zinc-200 transition-all duration-500 ease-in-out;
   }
 
   .article-page-date {
@@ -226,7 +226,7 @@
   }
 
   .article-page-desc {
-    @apply font-normal text-[16px] line-clamp-2 my-3 text-black-100 break-all;
+    @apply font-normal text-[16px] line-clamp-2 my-3 text-black-100 break-all dark:text-white-100/80;
   }
 
   .article-page-img {
@@ -243,19 +243,19 @@
 
   /* startupform */
   .article-form {
-    @apply max-w-7xl mx-auto bg-white my-10 space-y-8 px-10;
+    @apply max-w-7xl mx-auto bg-white dark:text-white-100/80 dark:bg-transparent my-10 space-y-8 px-10;
   }
 
   .article-form_label {
-    @apply font-bold text-[18px] text-black uppercase;
+    @apply font-bold text-[18px] text-black dark:text-white-100/80 uppercase;
   }
 
   .article-form_input {
-    @apply border-[3px] border-black/50 px-5 py-7 text-[18px] text-black font-semibold rounded-md mt-3 placeholder:text-black-300 !important;
+    @apply border-[3px] border-black/50 dark:border-white-100/20 dark:text-white-100/80 px-5 py-7 text-[18px] text-black font-semibold rounded-md mt-3 placeholder:text-black-300 !important;
   }
 
   .article-form_textarea {
-    @apply border-[3px] border-black/50 p-5 text-[18px] text-black font-semibold rounded-sm mt-3 placeholder:text-black-300 !important;
+    @apply border-[3px] border-black/50 dark:border-white-100/20 dark:text-white-100/80 p-5 text-[18px] text-black font-semibold rounded-sm mt-3 placeholder:text-black-300 !important;
   }
 
   .article-form_error {
@@ -283,11 +283,15 @@
   }
 
   .logout-button {
-    @apply mx-5 bg-transparent text-black hover:bg-gray-500 hover:text-black;
+    @apply mx-5 bg-transparent  dark:bg-white dark:text-black-100  dark:hover:bg-white-100/70 text-black hover:bg-gray-500 hover:text-black;
   }
 
   .create-button {
-    @apply bg-black text-white hover:bg-zinc-400 hover:text-black focus:bg-zinc-400 focus:text-black outline-none appearance-none;
+    @apply bg-black text-white  dark:bg-amber-500/90 dark:text-black-100 dark:hover:bg-white-100 hover:bg-white hover:text-black outline-none appearance-none;
+  }
+
+  .wmde-markdown-var {
+    @apply bg-white text-black dark:bg-black-200/70 dark:text-white-100/80;
   }
 
   .pattern {

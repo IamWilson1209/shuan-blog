@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 
 const AboutPage = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-r from-purple-100 to-indigo-100 py-16 px-6 animate-gradient">
+    <section className="min-h-screen bg-gradient-to-r from-purple-100 to-indigo-100 py-16 px-6 animate-gradient dark:global_background">
       <div className="max-w-6xl mx-auto">
         <div className="mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-black mb-12 text-center animate-fade-in">
+          <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white-100/80 mb-12 text-center animate-fade-in">
             What is Ex*?
           </h1>
-          <div className="bg-white shadow-lg rounded-lg p-8 md:p-12 transform transition-all hover:scale-105 duration-300 ease-in-out">
-            <p className="text-xl font-work-sans md:text-2xl text-gray-700 leading-relaxed">
+          <div className="bg-white dark:bg-zinc-800 shadow-lg rounded-lg p-8 md:p-12 transform transition-all hover:scale-105 duration-300 ease-in-out">
+            <p className="text-xl font-work-sans md:text-2xl text-gray-700 dark:text-white-100/80 leading-relaxed">
               Ex* is a{' '}
               <span className="font-semibold text-purple-600 animate-pulse">
                 public knowledge playground
@@ -31,11 +31,11 @@ const AboutPage = () => {
         </div>
 
         <div>
-          <h1 className="text-5xl md:text-6xl font-bold text-black mb-12 text-center animate-fade-in">
+          <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white-100/80 mb-12 text-center animate-fade-in">
             Why Ex*?
           </h1>
-          <div className="bg-white shadow-lg rounded-lg p-8 md:p-12 transform transition-all hover:scale-105 duration-300 ease-in-out">
-            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
+          <div className="bg-white dark:bg-zinc-800 shadow-lg rounded-lg p-8 md:p-12 transform transition-all hover:scale-105 duration-300 ease-in-out">
+            <p className="text-xl md:text-2xl text-gray-700 dark:text-white-100/80 leading-relaxed">
               The{' '}
               <span className="font-semibold text-purple-600 animate-pulse">
                 *

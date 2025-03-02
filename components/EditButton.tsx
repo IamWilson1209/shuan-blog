@@ -54,16 +54,19 @@ export const EditButton = ({
       <PopoverTrigger>
         <Ellipsis />
       </PopoverTrigger>
-      <PopoverContent className="w-50 bg-white shadow-md rounded-md">
+      <PopoverContent className="w-50 bg-white dark:bg-black-100 shadow-md rounded-md">
         <div className="flex flex-row gap-1">
-          <Button variant="nothing" className="text-black font-work-sans">
+          <Button
+            variant="nothing"
+            className="text-black dark:text-white-100 font-work-sans"
+          >
             <Link href={`/articles/edit/${id}`}>
               <Pencil />
             </Link>
           </Button>
           <Button
             variant="nothing"
-            className="text-red-900 font-work-sans"
+            className="text-red-900 dark:text-red-500 font-work-sans"
             onClick={handleDelete}
             disabled={isPending}
           >

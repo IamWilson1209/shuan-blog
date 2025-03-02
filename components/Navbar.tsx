@@ -6,21 +6,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from './ui/button';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { ModeToggle } from './DarkModeToggle';
 
 const Navbar = async () => {
   const session = await auth();
 
   return (
-    <header className="px-5 py-3 bg-white shadow-md font-work-sans">
+    <header className="px-5 py-3 bg-white dark:bg-black-200 shadow-md font-work-sans">
       <nav className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/Ex-black.png" alt="logo" width={72} height={15} />
+          <Image src="/Ex.png" alt="logo" width={64} height={64} />
         </Link>
 
         <div className="flex items-center text-black">
           <Button variant="ghost" className="max-md:hidden" asChild>
             <Link href="/contact">
-              <p className="bg-white p-2 text-16-medium hover:bg-black-100 hover:text-white-100 transition-colors duration-300">
+              <p className="bg-white dark:bg-black-200 dark:text-white-100/80 dark:hover:bg-white-100 dark:hover:text-black-100 p-2 text-16-medium hover:bg-black-100 hover:text-white-100 transition-colors duration-300">
                 Contact me
               </p>
             </Link>
@@ -28,16 +29,19 @@ const Navbar = async () => {
           <p className="max-md:hidden">|</p>
           <Button variant="ghost" className="max-md:hidden" asChild>
             <Link href="/about">
-              <p className="bg-white p-2 text-16-medium hover:bg-black-100 hover:text-white-100 transition-colors duration-300">
+              <p className="bg-white  dark:bg-black-200 dark:text-white-100/80 dark:hover:bg-white-100 dark:hover:text-black-100 p-2 text-16-medium hover:bg-black-100 hover:text-white-100 transition-colors duration-300">
                 About Ex*
               </p>
             </Link>
           </Button>
+          <div className="pr-5 dark:text-white-100/80">
+            <ModeToggle />
+          </div>
           {session && session?.user ? (
             <>
               <Link href={`/articles/create`}>
                 <Button className="create-button max-md:hidden">Create</Button>
-                <Plus className="size-8 mx-2 bg-black-200 text-white-100 rounded-full p-1 border-black hover:bg-zinc-100 hover:text-black-200 md:hidden transition-colors duration-500" />
+                <Plus className="size-8 mx-2 bg-black-200 text-white-100 rounded-full p-1 border-black hover:bg-black hover:text-white md:hidden transition-colors duration-150" />
               </Link>
 
               <form
@@ -51,17 +55,6 @@ const Navbar = async () => {
                   <LogOut className="size-8 mx-2 md:hidden text-red-800 mt-2" />
                 </button>
                 <Button className="logout-button max-md:hidden">Logout</Button>
-                <script
-                  dangerouslySetInnerHTML={{
-                    __html: `
-                document.getElementById("signout-button").addEventListener("click", function(e) {
-                  e.preventDefault();
-                  this.form.requestSubmit(); // 提交表單
-                  setTimeout(() => window.location.reload(), 100); // 提交後刷新
-                });
-              `,
-                  }}
-                />
               </form>
 
               <Link href={`/users/${session?.id}`}>

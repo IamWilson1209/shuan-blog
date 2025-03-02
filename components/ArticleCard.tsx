@@ -58,7 +58,7 @@ const ArticleCard = ({
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/articles/${_id}`}>
-            <h3 className="text-26-semibold line-clamp-1 hover:underline hover:text-blue-600/80">
+            <h3 className="text-26-semibold line-clamp-1 dark:text-white-100/80 dark:hover:hover:underline dark:hover:text-blue-600/80 hover:underline hover:text-blue-600/80">
               {title}
             </h3>
           </Link>
@@ -99,7 +99,7 @@ const ArticleCard = ({
       </Link>
       <div className="flex-between gap-3 mt-5">
         <Link href={`/?query=${category?.toLowerCase()}`}>
-          <p className="text-16-medium">Category : {category}</p>
+          <p className="text-16-medium"># {category}</p>
         </Link>
         <Button className="article-page-btn" asChild>
           <Link href={`/articles/${_id}`}>Details</Link>

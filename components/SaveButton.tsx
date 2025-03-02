@@ -55,7 +55,7 @@ const SaveButton = ({
     >
       {isSaved ? (
         <BookmarkIcon
-          className="text-black"
+          className="text-black dark:text-white-100/80"
           fill="currentColor"
           stroke="none"
         />

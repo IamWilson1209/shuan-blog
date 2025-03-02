@@ -8,11 +8,13 @@ import Image from 'next/image';
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-zinc-900  flex items-center justify-center p-6">
+      <div className="max-w-4xl w-full bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-8">
         {/* 上層：Contact Me 標題 */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Contact Me</h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white-100/70">
+            Contact Me
+          </h1>
         </div>
 
         {/* 分隔線 */}
@@ -22,11 +24,11 @@ const ContactPage = () => {
         <div className="md:flex md:space-x-8">
           {/* 中層左邊：自傳 */}
           <div className="md:w-2/3 space-y-4">
-            <p className="text-lg text-gray-700">
+            <p className="text-lg text-gray-700 dark:text-white-100/70">
               Hi! I’m <span className="font-semibold">Wei-Shiuan Lee</span>, a
               self-learning full-stack developer from Hsinchu, Taiwan.
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-white-100/70">
               I study all web development skills by myself, with my main
               specialized tech stack being{' '}
               <span className="font-medium text-red-600">MERN</span> (MongoDB,
@@ -34,7 +36,7 @@ const ContactPage = () => {
               <span className="font-medium text-red-600">Next.js</span>{' '}
               development.
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-white-100/70">
               Recently, I started my web engineering career and am seeking a
               full-time position as a{' '}
               <span className="font-medium">full-stack software engineer</span>.
@@ -59,7 +61,7 @@ const ContactPage = () => {
         <hr className="border-t border-gray-300 my-6" />
 
         {/* 下層：聯絡資訊 */}
-        <div className="text-sm text-gray-500 space-y-4">
+        <div className="text-sm text-gray-500 dark:text-white-100/70 space-y-4">
           <div className="flex flex-row space-x-32">
             <div>
               <p className="flex items-center gap-2">
