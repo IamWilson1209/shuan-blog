@@ -38,7 +38,7 @@ export const LikeButton = ({
     <button
       onClick={handleLike}
       disabled={isPending}
-      className="flex items-center gap-1 text-gray-600 hover:text-red-500 transition-colors"
+      className="flex items-center gap-1 font-medium text-gray-600 hover:text-red-500 transition-colors"
     >
       <Heart
         className={`size-5 ${hasLiked ? 'fill-red-500 text-red-500' : ''}`}

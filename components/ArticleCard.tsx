@@ -27,7 +27,7 @@ const ArticleCard = ({
   userId?: string;
   initialSavedStatus: boolean;
 }) => {
-  noStore(); // 確保資料即時更新（僅對 Server Component 有效，這裡可能無效）
+  // noStore(); // 確保資料即時更新（僅對 Server Component 有效，這裡可能無效）
   const {
     title,
     author,
@@ -80,16 +80,18 @@ const ArticleCard = ({
       </div>
       <div className="flex-between mt-5">
         <p className="article-page-date">{formatDate(_createdAt)}</p>
-        <div className="flex gap-1.5">
-          <EyeIcon className="size-6 text-primary" />
-          <span className="text-16-medium">{views}</span>
+        <div className="flex-between gap-1.5">
+          <div className="flex gap-1.5">
+            <EyeIcon className="size-6 text-gray-600" />
+            <span className="font-medium text-gray-600">{views}</span>
+          </div>
+          {/* 加入 LikeButton */}
+          <LikeButton
+            articleId={_id}
+            initialLikes={likes}
+            initialHasLiked={initialHasLiked}
+          />
         </div>
-        {/* 加入 LikeButton */}
-        <LikeButton
-          articleId={_id}
-          initialLikes={likes}
-          initialHasLiked={initialHasLiked}
-        />
       </div>
       <Link href={`/articles/${_id}`}>
         <p className="article-page-desc">{desc}</p>
@@ -106,15 +108,5 @@ const ArticleCard = ({
     </li>
   );
 };
-
-export const ArticleCardSkeleton = () => (
-  <>
-    {[0, 1, 2, 3, 4].map((index: number) => (
-      <li key={cn('skeleton', index)}>
-        <Skeleton className="article-page-skeleton" />
-      </li>
-    ))}
-  </>
-);
 
 export default ArticleCard;

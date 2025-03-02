@@ -4,6 +4,8 @@ import { auth, signOut, signIn } from '@/auth';
 import { Plus, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from './ui/button';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 const Navbar = async () => {
   const session = await auth();
@@ -49,6 +51,17 @@ const Navbar = async () => {
                   <LogOut className="size-8 mx-2 md:hidden text-red-800 mt-2" />
                 </button>
                 <Button className="logout-button max-md:hidden">Logout</Button>
+                <script
+                  dangerouslySetInnerHTML={{
+                    __html: `
+                document.getElementById("signout-button").addEventListener("click", function(e) {
+                  e.preventDefault();
+                  this.form.requestSubmit(); // 提交表單
+                  setTimeout(() => window.location.reload(), 100); // 提交後刷新
+                });
+              `,
+                  }}
+                />
               </form>
 
               <Link href={`/users/${session?.id}`}>

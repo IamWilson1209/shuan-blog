@@ -15,6 +15,7 @@ export interface EnrichedArticlePageType extends ArticlePageType {
 interface LoadMoreProps {
   initialArticles: EnrichedArticlePageType[];
   searchQuery?: string | string[] | null | undefined;
+  // userId?: string;
 }
 
 // 計算所有文章的 initialSavedStatus
@@ -33,7 +34,11 @@ async function fetchInitialSavedStatuses(
   }));
 }
 
-function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
+function LoadMoreSpinner({
+  initialArticles,
+  searchQuery,
+  // userId,
+}: LoadMoreProps) {
   const { ref, inView } = useInView();
   const [articles, setArticles] =
     useState<EnrichedArticlePageType[]>(initialArticles);
@@ -86,7 +91,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
       }, delay);
       return () => clearTimeout(timeoutId);
     }
-  }, [inView, isLoading, searchQuery, hasMore]);
+  }, [inView, isLoading, searchQuery, hasMore, userId]);
 
   return (
     <>

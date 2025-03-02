@@ -7,7 +7,6 @@ import {
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 import Image from 'next/image';
-import { ArticleCardSkeleton } from '@/components/ArticleCard';
 import UserArticles from '@/components/UserArticles';
 
 const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -58,7 +57,7 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         </p>
         <hr className="my-4 border-black-100/20" />
         <ul className="card_grid-sm">
-          <Suspense fallback={<ArticleCardSkeleton />}>
+          <Suspense fallback={<ArticleLoading />}>
             <UserArticles
               id={id}
               userId={userId}
@@ -68,6 +67,17 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         </ul>
       </div>
     </section>
+  );
+};
+
+const ArticleLoading = () => {
+  return (
+    <Image
+      src={'/fade-stagger-circles.svg'}
+      alt="Loading"
+      width={120}
+      height={120}
+    />
   );
 };
 
