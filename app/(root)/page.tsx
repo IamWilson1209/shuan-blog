@@ -3,7 +3,6 @@ import { SanityLive } from '@/sanity/lib/live';
 import LoadMoreSpinner from '@/components/LoadMoreSpinner';
 import { fetchArticlesAction } from '@/actions/server-actions';
 import { Newspaper } from 'lucide-react';
-import EmailForm from '@/components/EmailForm';
 
 export default async function Home({
   searchParams,

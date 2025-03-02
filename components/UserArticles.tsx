@@ -16,13 +16,14 @@ const UserArticles = async ({
     .withConfig({ useCdn: false })
     .fetch(GET_ARTICLES_BY_AUTHOR_QUERY, { id });
 
-  // 將每篇文章與 savedArticleIds 匹配，計算 initialSavedStatus
+  /* 將每篇文章與 savedArticleIds 匹配，計算 initialSavedStatus */
   const articleWithSaveStatus = userArticles.map(
     (article: ArticlePageType) => ({
       ...article,
       initialSavedStatus: savedArticleIds.has(article._id),
     })
   );
+
   return (
     <>
       {userArticles.length > 0 ? (

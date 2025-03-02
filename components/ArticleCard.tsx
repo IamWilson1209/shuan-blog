@@ -10,8 +10,13 @@ import { Skeleton } from './ui/skeleton';
 import { EditButton } from './EditButton';
 import { deleteArticleAction } from '@/actions/server-actions';
 import { unstable_noStore as noStore } from 'next/cache';
+import { LikeButton } from './LikeButton';
 
-export type ArticlePageType = Omit<Article, 'author'> & { author?: Author };
+export type ArticlePageType = Omit<Article, 'author'> & {
+  author?: Author;
+  likes?: number;
+  likedBy?: string[];
+};
 
 const ArticleCard = ({
   article,
@@ -22,9 +27,22 @@ const ArticleCard = ({
   userId?: string;
   initialSavedStatus: boolean;
 }) => {
-  noStore(); // 確保資料即時更新
-  const { title, author, category, _id, image, desc, views, _createdAt } =
-    article;
+  noStore(); // 確保資料即時更新（僅對 Server Component 有效，這裡可能無效）
+  const {
+    title,
+    author,
+    category,
+    _id,
+    image,
+    desc,
+    views,
+    _createdAt,
+    likes,
+    likedBy,
+  } = article;
+
+  // O(1)
+  const initialHasLiked = userId ? likedBy?.includes(userId) : false;
 
   return (
     <li className="relative article-page-card group">
@@ -66,6 +84,12 @@ const ArticleCard = ({
           <EyeIcon className="size-6 text-primary" />
           <span className="text-16-medium">{views}</span>
         </div>
+        {/* 加入 LikeButton */}
+        <LikeButton
+          articleId={_id}
+          initialLikes={likes}
+          initialHasLiked={initialHasLiked}
+        />
       </div>
       <Link href={`/articles/${_id}`}>
         <p className="article-page-desc">{desc}</p>

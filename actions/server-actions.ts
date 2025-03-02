@@ -3,7 +3,7 @@
 import { auth } from "@/auth"
 import { parseServerActionResponse } from "@/utils/utils";
 import { client } from "@/sanity/lib/client";
-import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_ARTICLES_SAVE_STATUS_BY_USER_ID } from "@/sanity/lib/queries";
+import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_ARTICLES_SAVE_STATUS_BY_USER_ID } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";
 import { revalidatePath } from "next/cache";
 import slugify from "slugify";
@@ -188,4 +188,48 @@ export const getSavedStatus = async (userId: string, articleId: string) => {
   );
   const savedArticles = user?.savedArticles || [];
   return savedArticles.some((ref: { _ref: string; }) => ref._ref === articleId);
+}
+
+
+export async function toggleLikeAction(articleId: string) {
+  try {
+    const session = await auth();
+    if (!session || !session.id) {
+      throw new Error('Unauthenticated');
+    }
+
+    const userId = session.id;
+    const article = await client.withConfig({ useCdn: false }).fetch(
+      GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY,
+      { id: articleId }
+    );
+
+    if (!article) {
+      throw new Error('Article not found');
+    }
+
+    const hasLiked = article.likedBy?.includes(userId);
+    const newLikes = hasLiked ? article.likes - 1 : article.likes + 1;
+
+    console.log("like info: ", hasLiked, newLikes);
+    const newLikedBy = hasLiked
+      ? article.likedBy.filter((id: string) => id !== userId)
+      : [...(article.likedBy || []), userId];
+
+    const updatedArticle = await writeClient
+      .patch(articleId)
+      .set({
+        likes: newLikes,
+        likedBy: newLikedBy.map((id: string) => ({ _type: 'reference', _ref: id })),
+      })
+      .commit();
+
+    revalidatePath(`/articles/${articleId}`); // 更新文章詳情頁
+    revalidatePath(`/users/${article.author?._id}`); // 更新作者頁面（可選）
+
+    return { status: 'Success', likes: newLikes, hasLiked: !hasLiked };
+  } catch (error) {
+    console.error('Error toggling like:', error);
+    return { status: 'Error', error: 'Failed to toggle like' };
+  }
 }

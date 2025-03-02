@@ -53,5 +53,17 @@ export const articleType = defineType({
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'likes',
+      type: 'number',
+      initialValue: 0,
+      validation: (rule) => rule.min(0),
+    }),
+    defineField({
+      name: 'likedBy',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'author' }] }],
+      validation: (rule) => rule.unique(),
+    }),
   ],
 })

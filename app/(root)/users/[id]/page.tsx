@@ -22,7 +22,6 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       ? client.fetch(GET_ARTICLES_SAVE_STATUS_BY_USER_ID, { userId })
       : Promise.resolve({ savedArticles: [] }),
   ]);
-  // const user = await client.fetch(GET_AUTHOR_BY_ID_QUERY, { id });
   if (!user) return notFound();
 
   // 將 savedArticles 轉為 Set 以便快速查找

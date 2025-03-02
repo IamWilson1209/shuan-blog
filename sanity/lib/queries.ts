@@ -13,6 +13,8 @@ export const GET_ARTICLES_QUERY =
   desc,
   category,
   image,
+  likes,
+  "likedBy": likedBy[]->_id
 }`);
 
 export const GET_ARTICLE_BY_ID_QUERY =
@@ -63,6 +65,10 @@ export const GET_ARTICLE_VIEWS_BY_ID_QUERY = defineQuery(
   _id, views
   }`)
 
+export const GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY = defineQuery(
+  `*[_type == "article" && _id == $id][0]{likes, "likedBy": likedBy[]->_id}`
+)
+
 export const GET_ARTICLES_BY_AUTHOR_QUERY = defineQuery(
   `*[_type == "article" && author._ref == $id] | order(_createdAt desc){
   _id, 
@@ -76,6 +82,8 @@ export const GET_ARTICLES_BY_AUTHOR_QUERY = defineQuery(
   desc,
   category,
   image,
+  likes,
+  "likedBy": likedBy[]->_id
   }`)
 
 export const GET_PLAYLIST_BY_SLUG_QUERY =

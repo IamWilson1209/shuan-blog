@@ -7,7 +7,7 @@ import ArticleCard, { ArticlePageType } from './ArticleCard';
 import { fetchArticlesAction, getSavedStatus } from '@/actions/server-actions';
 import { useSession } from 'next-auth/react';
 
-// 擴展 ArticlePageType，添加 initialSavedStatus
+/* 擴展 ArticlePageType，添加 initialSavedStatus */
 export interface EnrichedArticlePageType extends ArticlePageType {
   initialSavedStatus: boolean;
 }
