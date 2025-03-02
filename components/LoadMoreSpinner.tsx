@@ -109,7 +109,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
         <div ref={ref}>
           {inView && isLoading && (
             <Image
-              src="./tube-spinner.svg"
+              src="./fade-stagger-circles.svg"
               alt="spinner"
               width={120}
               height={120}

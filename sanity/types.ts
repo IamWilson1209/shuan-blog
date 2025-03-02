@@ -162,6 +162,14 @@ export type Article = {
   desc?: string;
   content?: string;
   publishedAt?: string;
+  likes?: number;
+  likedBy?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "author";
+  }>;
 };
 
 export type Slug = {
