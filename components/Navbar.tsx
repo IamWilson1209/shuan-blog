@@ -4,15 +4,13 @@ import { auth, signOut, signIn } from '@/auth';
 import { Plus, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from './ui/button';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { ModeToggle } from './DarkModeToggle';
 
 const Navbar = async () => {
   const session = await auth();
 
   return (
-    <header className="px-5 py-3 bg-white dark:bg-black-200 shadow-md font-work-sans">
+    <header className="px-5 py-3 bg-white dark:bg-black-200 shadow-md font-work-sans border-b dark:border-gray-700">
       <nav className="flex justify-between items-center">
         <Link href="/">
           <Image src="/Ex.png" alt="logo" width={64} height={64} />

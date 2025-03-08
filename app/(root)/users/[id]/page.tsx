@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 import Image from 'next/image';
 import UserArticles from '@/components/UserArticles';
+import LoadingSkeleton from '@/components/LoadingSkeleton';
 
 const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
@@ -75,20 +76,7 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 const ArticleLoading = () => {
   return (
     <div className="flex justify-center items-center">
-      <Image
-        src="/fade-stagger-circles.svg" // Light Mode 圖片
-        alt="Loading"
-        width={120}
-        height={120}
-        className="block dark:hidden" // Light Mode 可見，Dark Mode 隱藏
-      />
-      <Image
-        src="/fade-stagger-squares.svg" // Dark Mode 圖片
-        alt="Loading"
-        width={120}
-        height={120}
-        className="hidden dark:block" // Dark Mode 可見，Light Mode 隱藏
-      />
+      <LoadingSkeleton />
     </div>
   );
 };

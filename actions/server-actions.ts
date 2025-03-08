@@ -211,7 +211,6 @@ export async function toggleLikeAction(articleId: string) {
     const hasLiked = article.likedBy?.includes(userId);
     const newLikes = hasLiked ? article.likes - 1 : article.likes + 1;
 
-    console.log("like info: ", hasLiked, newLikes);
     const newLikedBy = hasLiked
       ? article.likedBy.filter((id: string) => id !== userId)
       : [...(article.likedBy || []), userId];
@@ -224,10 +223,30 @@ export async function toggleLikeAction(articleId: string) {
       })
       .commit();
 
-    revalidatePath(`/articles/${articleId}`); // 更新文章詳情頁
-    revalidatePath(`/users/${article.author?._id}`); // 更新作者頁面（可選）
-
+    revalidatePath(`/articles/${articleId}`);
+    revalidatePath(`/users/${article.author?._id}`);
     return { status: 'Success', likes: newLikes, hasLiked: !hasLiked };
+  } catch (error) {
+    console.error('Error toggling like:', error);
+    return { status: 'Error', error: 'Failed to toggle like' };
+  }
+}
+
+export const getLikedStatus = async (userId: string, articleId: string) => {
+  try {
+    const article = await client.withConfig({ useCdn: false }).fetch(
+      GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY,
+      { id: articleId }
+    );
+
+    if (!article) {
+      throw new Error('Article not found');
+    }
+
+    const hasLiked = article.likedBy?.includes(userId);
+    const likedNumber = article.likes;
+
+    return { status: 'Success', likedNumber: likedNumber, hasLiked: hasLiked };
   } catch (error) {
     console.error('Error toggling like:', error);
     return { status: 'Error', error: 'Failed to toggle like' };

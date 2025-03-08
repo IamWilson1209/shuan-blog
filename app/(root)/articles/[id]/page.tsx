@@ -13,8 +13,9 @@ import { notFound } from 'next/navigation';
 import markdownit from 'markdown-it';
 import { Timer } from 'lucide-react';
 import { auth } from '@/auth';
-import { getSavedStatus } from '@/actions/server-actions';
+import { getLikedStatus, getSavedStatus } from '@/actions/server-actions';
 import SaveButton from '@/components/SaveButton';
+import { LikeButton } from '@/components/LikeButton';
 
 const md = markdownit();
 export const experimental_ppr = true;
@@ -33,12 +34,19 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
     Docs: https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#parallel-and-sequential-data-fetching
     Parallel data fetching
   */
-  const [article] = await Promise.all([
+  const [article, likedStatus] = await Promise.all([
     client.withConfig({ useCdn: false }).fetch(GET_ARTICLE_BY_ID_QUERY, { id }),
     // client.fetch(GET_PLAYLIST_BY_SLUG_QUERY, {
     //   slug: 'user-playlist',
     // }),
+    // server action: getLikedStatus
+    getLikedStatus(currentUserId, id),
   ]);
+
+  const hasLiked =
+    likedStatus?.status === 'Success' ? likedStatus.hasLiked : false;
+
+  console.log('hasLiked: ', hasLiked);
 
   const parsedContent = md.render(article?.content || '');
 
@@ -84,6 +92,13 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
             <div className="flex gap-3 items-center">
               <p className="category-tag"># {article.category}</p>
+              <div className="px-2">
+                <LikeButton
+                  articleId={id}
+                  initialLikes={likedStatus?.likedNumber}
+                  initialHasLiked={likedStatus?.hasLiked}
+                />
+              </div>
               <SaveButton
                 onlyIcon={false}
                 articleId={id}

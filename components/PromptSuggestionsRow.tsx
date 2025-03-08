@@ -4,7 +4,7 @@ const PromptSuggestionsRows = ({ onPromptClick }) => {
   const prompts = [
     'Write a journey for me',
     'Give me a intersted story',
-    'What is Ex*?',
+    'Introduce Ex* to me',
   ];
   return (
     <div className="flex flex-row flex-wrap items-center justify-center gap-3 p-4">

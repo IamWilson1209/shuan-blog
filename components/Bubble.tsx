@@ -10,7 +10,7 @@ const Bubble = ({ message }) => {
     <div
       className={`${bubbleStyle} max-w-[80%] rounded-lg p-4 mb-2 break-words`}
     >
-      content {content}
+      {content}
     </div>
   );
 };

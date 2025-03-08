@@ -279,7 +279,7 @@
   }
 
   .category-tag {
-    @apply font-normal text-[15px] px-5 py-3 bg-black-200 text-white rounded-sm;
+    @apply font-normal text-[15px] px-3 py-3 bg-black-200 text-white rounded-sm;
   }
 
   .logout-button {

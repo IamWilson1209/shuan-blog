@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import ArticleCard, { ArticlePageType } from './ArticleCard';
 import { fetchArticlesAction, getSavedStatus } from '@/actions/server-actions';
 import { useSession } from 'next-auth/react';
+import LoadingSkeleton from './LoadingSkeleton';
 
 /* 擴展 ArticlePageType，添加 initialSavedStatus */
 export interface EnrichedArticlePageType extends ArticlePageType {
@@ -113,17 +114,13 @@ function LoadMoreSpinner({
       <section className="flex justify-center items-center w-full">
         <div ref={ref}>
           {inView && isLoading && (
-            <Image
-              src="./fade-stagger-circles.svg"
-              alt="spinner"
-              width={120}
-              height={120}
-              className="object-contain"
-            />
+            <div>
+              <LoadingSkeleton />
+            </div>
           )}
           {inView && !hasMore && (
             <>
-              <p className="text-center text-[40px] font-bold text-black-200 mt-3">
+              <p className="text-center text-[40px] font-bold text-black-200 dark:text-white-100/80 mt-3">
                 No more articles
               </p>
             </>
