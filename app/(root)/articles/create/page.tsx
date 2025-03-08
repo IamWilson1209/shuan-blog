@@ -1,5 +1,6 @@
 import { auth } from '@/auth';
 import ArticleEditForm from '@/components/ArticleEditForm';
+import ExChatSideBar from '@/components/ExChatSideBar';
 import { redirect } from 'next/navigation';
 
 const CreatePage = async () => {

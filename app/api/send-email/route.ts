@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('POST API Error:', error);
+    console.error('Error in send-email POST API:', error);
     return NextResponse.json(
       {
         success: false,
