@@ -53,7 +53,7 @@
     "react-dom": "^19.0.0",
     "react-intersection-observer": "^9.15.1",
     "sanity": "^3.75.0",
-    "sanity-plugin-markdown": "^5.0.0",
+    "sanity-plugin-markdown": "^5.1.0",
     "server-only": "^0.0.1",
     "slugify": "^1.6.6",
     "sonner": "^2.0.1",
