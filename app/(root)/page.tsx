@@ -29,13 +29,14 @@ export default async function Home({
         <div className="flex justify-start items-center pl-4">
           <SquarePen width={45} height={45} />
           <p className="text-all-article">
-            {query ? `Search result for keyword "${query}"` : 'All articles'}
+            {query
+              ? `Search result for keyword "${query}"`
+              : 'Public Playground'}
           </p>
         </div>
         <LoadMoreSpinner
           initialArticles={initialArticles}
           searchQuery={query}
-          // userId={session?.id}
         />
       </section>
       <SanityLive />
