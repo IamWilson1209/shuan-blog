@@ -32,8 +32,8 @@ export default async function Home({
       <section className="global_background">
         <h1 className="heading">Welcome to Ex*!!</h1>
         <p className="sub-heading text-center !max-w-3xl">
-          Share what you've learned to make this{' '}
-          <span className="idea">playground</span> more interesting!
+          Share what you've learned to make this <br></br>
+          <span className="idea">public playground</span> even more fun!!
         </p>
         <SearchForm query={query} />
       </section>

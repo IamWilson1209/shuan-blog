@@ -10,7 +10,6 @@ import Image from 'next/image';
 import UserArticles from '@/components/UserArticles';
 import LoadingSkeleton from '@/components/LoadingSkeleton';
 import { Metadata, ResolvingMetadata } from 'next';
-import { openGraphImage } from '@/app/shared-metadata';
 
 type Props = {
   params: Promise<{ id: string }>;
