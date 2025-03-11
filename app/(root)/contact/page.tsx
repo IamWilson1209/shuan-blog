@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 import { openGraphImage } from '@/app/shared-metadata';
 
 export const metadata: Metadata = {
-  title: `Ex* | Contact me | Shuan'${'s'} blog`,
+  title: `Ex* | Contact me`,
   description:
     'Contact Me Information: Email:zenfonlee@gmail.com, Phone:+886-965-650-099, GitHub: https://github.com/IamWilson1209, LinkedIn: https://linkedin.com/in/weishiuan',
   openGraph: {

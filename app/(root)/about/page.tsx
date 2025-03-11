@@ -3,9 +3,14 @@ import { Metadata } from 'next';
 import { openGraphImage } from '@/app/shared-metadata';
 
 export const metadata: Metadata = {
-  title: `Ex* | About Ex* | Shuan'${'s'} blog`,
+  title: `Ex* | About Ex*`,
   description:
-    'Ex* is a public knowledge playground where you can explore content shared by others, gain valuable knowledge, and even contribute your own ideas, experiences, or expertise to the public. Join us and start your journey by creating!',
+    'Ex* is a public knowledge playground where you can explore content shared by others, gain valuable knowledge, \
+    and even contribute your own ideas, experiences, or expertise to the public. Join us and start your journey by creating!\
+    The * invites you to fill in any word starting with Ex that resonates with you. \
+    To me, Ex is a special prefix, sparking countless positive adjectives like extraordinary, excellent, and exceptional. \
+    Though there are also words with some ordinary meanings—expired, ex-girlfriend, or ex-boyfriend, Ex* is yours to define. By using this platform thoughtfully, \
+    you can transform Ex* into a force for good and unlock its potential to inspire and support you. Let’s get started!',
   openGraph: {
     ...openGraphImage,
     title: 'Public PlayGround',
@@ -61,10 +66,9 @@ const AboutPage = () => {
           </div>
         </div>
 
-        {/* Logo 展示 */}
         <div className="flex justify-center mt-16">
           <img
-            src="/Ex-meta.png"
+            src="/Ex*.png"
             alt="Ex Logo"
             className="w-32 h-32 rounded-md hover:scale-110 transition-transform duration-300 ease-in-out"
           />
