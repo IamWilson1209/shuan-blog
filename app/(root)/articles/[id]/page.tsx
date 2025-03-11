@@ -17,6 +17,31 @@ import { getLikedStatus, getSavedStatus } from '@/actions/server-actions';
 import SaveButton from '@/components/SaveButton';
 import { LikeButton } from '@/components/LikeButton';
 
+import { Metadata, ResolvingMetadata } from 'next';
+
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { id } = await params;
+  const article = await client.fetch(GET_ARTICLE_BY_ID_QUERY, { id });
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: `${article?.title} | ${article?.author?.name}`,
+    description: `${article?.desc} | ${article?._createdAt} | ${article?.category}`,
+    openGraph: {
+      images: [`${article?.image}`, ...previousImages],
+    },
+  };
+}
+
 const md = markdownit();
 export const experimental_ppr = true;
 
@@ -55,8 +80,8 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <>
       <section className="flex flex-col items-start mt-5 max-w-7xl mx-auto">
-        <h1 className="heading-article">{article.title}</h1>
-        <p className="px-6 sub-heading-article !max-w-5xl">{article.desc}</p>
+        <h1 className="heading-article">{article?.title}</h1>
+        <p className="px-6 sub-heading-article !max-w-5xl">{article?.desc}</p>
         <div className="flex items-start gap-2 px-6 mt-1">
           <Timer
             className="pb-1 text-black-100/80 dark:text-white-100"
@@ -71,11 +96,11 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <hr />
           <div className="flex-between gap-5">
             <Link
-              href={`/users/${article.author?._id}`}
+              href={`/users/${article?.author?._id}`}
               className="flex gap-2 items-center mb-3"
             >
               <Image
-                src={article.author.image}
+                src={article?.author?.image}
                 alt="avatar"
                 width={64}
                 height={64}
@@ -83,15 +108,15 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
               />
 
               <div className="mx-1">
-                <p className="text-24-medium">{article.author.name}</p>
+                <p className="text-24-medium">{article?.author?.name}</p>
                 <p className="text-16-medium !text-black-300">
-                  @{article.author.username}
+                  @{article?.author?.username}
                 </p>
               </div>
             </Link>
 
             <div className="flex gap-3 items-center">
-              <p className="category-tag"># {article.category}</p>
+              <p className="category-tag"># {article?.category}</p>
               <div className="px-2">
                 <LikeButton
                   articleId={id}
@@ -110,7 +135,7 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
           <hr className="mt-8" />
           <img
-            src={article.image}
+            src={article?.image}
             alt="thumbnail"
             className="w-full h-auto rounded-xl mb-3"
           />
