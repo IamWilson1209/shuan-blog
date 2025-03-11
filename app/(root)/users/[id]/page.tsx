@@ -9,6 +9,30 @@ import React, { Suspense } from 'react';
 import Image from 'next/image';
 import UserArticles from '@/components/UserArticles';
 import LoadingSkeleton from '@/components/LoadingSkeleton';
+import { Metadata, ResolvingMetadata } from 'next';
+import { openGraphImage } from '@/app/shared-metadata';
+
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { id } = await params;
+  const user = await client.fetch(GET_AUTHOR_BY_ID_QUERY, { id });
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: `Ex* | ${user?.username} | ${user?.email}`,
+    openGraph: {
+      images: [`${user?.url}`, ...previousImages],
+    },
+  };
+}
 
 const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;

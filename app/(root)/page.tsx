@@ -5,6 +5,19 @@ import { fetchArticlesAction } from '@/actions/server-actions';
 import { SquarePen } from 'lucide-react';
 import { auth } from '@/auth';
 
+import type { Metadata } from 'next';
+import { openGraphImage } from '../shared-metadata';
+
+export const metadata: Metadata = {
+  title: `Ex* | Shuan'${'s'} blog | shuan.ltd | www.shuan.ltd`,
+  description:
+    'Welcome to my website -- Ex*, you can share your ideas with me at here, and know more about my technical background, knowledge.',
+  openGraph: {
+    ...openGraphImage,
+    title: 'Public PlayGround',
+  },
+};
+
 export default async function Home({
   searchParams,
 }: {

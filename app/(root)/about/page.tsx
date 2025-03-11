@@ -1,11 +1,15 @@
 import React from 'react';
 import { Metadata } from 'next';
+import { openGraphImage } from '@/app/shared-metadata';
 
 export const metadata: Metadata = {
-  title: 'About Ex* | Ex*.com',
+  title: `Ex* | About Ex* | Shuan'${'s'} blog`,
   description:
     'Ex* is a public knowledge playground where you can explore content shared by others, gain valuable knowledge, and even contribute your own ideas, experiences, or expertise to the public. Join us and start your journey by creating!',
-  icons: { icon: '/Ex-meta-v3.png' },
+  openGraph: {
+    ...openGraphImage,
+    title: 'Public PlayGround',
+  },
 };
 
 const AboutPage = () => {

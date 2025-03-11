@@ -1,10 +1,21 @@
-'use client';
-
 import EmailForm from '@/components/EmailForm';
 import Link from 'next/link';
 import React from 'react';
 import { Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
+import { Metadata } from 'next';
+import { openGraphImage } from '@/app/shared-metadata';
+
+export const metadata: Metadata = {
+  title: `Ex* | Contact me | Shuan'${'s'} blog`,
+  description:
+    'Contact Me Information: Email:zenfonlee@gmail.com, Phone:+886-965-650-099, GitHub: https://github.com/IamWilson1209, LinkedIn: https://linkedin.com/in/weishiuan',
+  openGraph: {
+    ...openGraphImage,
+    images: ['Shuan.jpg'],
+    title: '李瑋軒 | Wei-shiuan Lee',
+  },
+};
 
 const ContactPage = () => {
   return (

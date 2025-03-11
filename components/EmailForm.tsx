@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Send, Mail } from 'lucide-react';
@@ -15,13 +17,11 @@ export default function EmailForm() {
     email: '',
     message: '',
   });
-  // const [status, setStatus] = useState<string>('');
 
   const recipientEmail = 'zenfonlee@gmail.com';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // setStatus('');
 
     const subject = `Message from Ex* - ${formData.name}`;
     const content = `

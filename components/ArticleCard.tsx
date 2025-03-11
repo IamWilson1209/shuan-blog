@@ -85,7 +85,6 @@ const ArticleCard = ({
             <EyeIcon className="size-6 text-gray-600" />
             <span className="font-medium text-gray-600">{views}</span>
           </div>
-          {/* 加入 LikeButton */}
           <LikeButton
             articleId={_id}
             initialLikes={likes}
