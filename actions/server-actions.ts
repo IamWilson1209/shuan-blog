@@ -106,6 +106,7 @@ export const deleteArticleAction = async (articleId: string) => {
 
     const session = await auth();
 
+
     if (!session) {
       return parseServerActionResponse({
         error: "Unauthenticated",
