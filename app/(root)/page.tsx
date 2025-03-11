@@ -24,7 +24,6 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const query = (await searchParams).query;
-  const session = await auth();
   const initialArticles = await fetchArticlesAction(1, query);
 
   return (
