@@ -84,6 +84,7 @@ const ArticleEditForm = ({ article }: { article?: ArticlePageType }) => {
           setContent('');
         }
 
+        router.refresh(); // 這會觸發頁面重新從伺服器獲取最新的 article 資料
         router.push(`/articles/${article?._id || res._id}`);
       }
 

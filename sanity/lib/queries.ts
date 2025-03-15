@@ -30,7 +30,9 @@ export const GET_ARTICLE_BY_ID_QUERY =
   desc,
   category,
   image,
-  content
+  content,
+  likes,
+  "likedBy": likedBy[]->_id
 }`);
 
 export const GET_AUTHOR_BY_ID_QUERY =
