@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
 import ArticleCard, { ArticlePageType } from './ArticleCard';
@@ -16,7 +15,6 @@ export interface EnrichedArticlePageType extends ArticlePageType {
 interface LoadMoreProps {
   initialArticles: EnrichedArticlePageType[];
   searchQuery?: string | string[] | null | undefined;
-  // userId?: string;
 }
 
 // 計算所有文章的 initialSavedStatus
@@ -62,12 +60,14 @@ function LoadMoreSpinner({
     if (status !== 'loading') {
       loadInitialArticles();
     }
-  }, [initialArticles, userId, status]);
+  }, [initialArticles, session, status]);
 
   useEffect(() => {
     pageRef.current = page;
   }, [page]);
   useEffect(() => {
+    console.log('trigger 2');
+
     // 有問題來這裡找
     if (inView && hasMore) {
       setIsLoading(true);
@@ -92,7 +92,7 @@ function LoadMoreSpinner({
       }, delay);
       return () => clearTimeout(timeoutId);
     }
-  }, [inView, isLoading, searchQuery, hasMore, userId]);
+  }, [inView, isLoading, searchQuery, hasMore]);
 
   return (
     <>

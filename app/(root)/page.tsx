@@ -3,7 +3,6 @@ import { SanityLive } from '@/sanity/lib/live';
 import LoadMoreSpinner from '@/components/LoadMoreSpinner';
 import { fetchArticlesAction } from '@/actions/server-actions';
 import { SquarePen } from 'lucide-react';
-import { auth } from '@/auth';
 
 import type { Metadata } from 'next';
 import { openGraphImage } from '../shared-metadata';
