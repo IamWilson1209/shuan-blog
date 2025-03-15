@@ -21,7 +21,9 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { id } = await params;
-  const user = await client.fetch(GET_AUTHOR_BY_ID_QUERY, { id });
+  const user = await client
+    .withConfig({ useCdn: false })
+    .fetch(GET_AUTHOR_BY_ID_QUERY, { id });
 
   const previousImages = (await parent).openGraph?.images || [];
 
