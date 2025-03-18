@@ -9,7 +9,7 @@ jest.mock('sanity/lib/client', () => ({
 describe('About Page', () => {
   it('text renders correctly', async () => {
     render(<AboutPage />);
-    expect(screen.getByText('What is Ex*?')).toBeInTheDocument();
+    expect(screen.getByText('What is Ex?')).toBeInTheDocument();
     expect(screen.getByText('Why Ex*?')).toBeInTheDocument();
   });
 });
