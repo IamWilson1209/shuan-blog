@@ -37,3 +37,5 @@ jobs:
       # 步驟 4：運行 Jest 測試
       - name: Run Jest tests
         run: npm test
+        env:
+          CI: true # 確保 Jest 在 CI 模式下運行
