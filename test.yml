@@ -1,0 +1,32 @@
+name: CI - Run Jest Tests
+
+# 觸發條件：當有 pull request 針對 main 分支時執行
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - dev-test
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 虛擬機
+
+    steps:
+      # 步驟 1：pull程式碼
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 步驟 2：設置 Node.js 環境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 步驟 3：安裝依賴
+      - name: Install dependencies
+        run: npm install
+
+      # 步驟 4：運行 Jest 測試
+      - name: Run Jest tests
+        run: npm test
