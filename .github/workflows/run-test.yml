@@ -2,9 +2,9 @@ name: GitHub Actions CI - Run Jest Tests
 
 # 觸發條件：當有 pull request 針對 main 分支時執行
 on:
-  push:
-    branchs: # 只要有任何一個 commit 被 push，就會觸發此 action
-      '*'
+  # push:
+  #   branchs: # 只要有任何一個 commit 被 push，就會觸發此 action
+  #     '*'
   pull_request:
     branches:
       - main
