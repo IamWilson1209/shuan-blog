@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react';
 import { Heart } from 'lucide-react';
 import { toast } from 'sonner';
 import { toggleLikeAction } from '@/actions/server-actions';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 interface LikeButtonProps {
   articleId: string;
@@ -28,6 +29,12 @@ export const LikeButton = ({
         setLikes(result.likes);
         setHasLiked(result.hasLiked);
         toast.success(result.hasLiked ? 'Liked!' : 'Unliked!');
+        // 發送 GTM 事件
+        sendGTMEvent({
+          event: 'likeButtonClicked', // 自訂事件名稱
+          value: result.hasLiked ? 'like' : 'unlike', // 根據按讚狀態傳送不同值
+          articleId: articleId, // 傳送文章 ID
+        });
       } else {
         toast.error(result.error || 'Failed to toggle like');
       }
