@@ -6,6 +6,7 @@ import { BookmarkIcon } from 'lucide-react';
 import { Button } from './ui/button';
 import { toggleSaveArticle } from '@/actions/server-actions';
 import { toast } from 'sonner';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 type SaveButtonProps = {
   articleId: string;
@@ -39,6 +40,11 @@ const SaveButton = ({
         toast.success(
           result.isSaved ? 'Article has been saved' : 'Article has beed unsaved'
         );
+        sendGTMEvent({
+          event: 'likeButtonClicked', // 自訂事件名稱
+          value: result.isSaved ? 'saved' : 'unSaved', // 根據按讚狀態傳送不同值
+          articleId: articleId, // 傳送文章 ID
+        });
       } catch (error) {
         console.error('Failed to toggle save:', error);
         toast.error('Failed to toggle save status');
