@@ -83,6 +83,7 @@ export default function RootLayout({
         >
           <SessionProvider>
             {children}
+            <Analytics />
             <Toaster position="bottom-left" closeButton richColors />
           </SessionProvider>
         </ThemeProvider>
