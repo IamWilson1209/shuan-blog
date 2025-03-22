@@ -5,6 +5,7 @@ import 'easymde/dist/easymde.min.css';
 import { Toaster } from 'sonner';
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
+import { Analytics } from '@vercel/analytics/react';
 
 const workSans = localFont({
   src: [
