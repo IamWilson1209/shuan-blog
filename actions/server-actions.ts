@@ -149,6 +149,7 @@ export const fetchArticlesAction = async (page: number, sanityQuery?: string | s
   }
 }
 
+/* Auth 邏輯待修改 */
 export const toggleSaveArticle = async (userId: string | null | undefined, articleId: string) => {
   if (!userId || !articleId) {
     throw new Error('Missing key arguments');
@@ -182,6 +183,7 @@ export const toggleSaveArticle = async (userId: string | null | undefined, artic
   }
 }
 
+/* Auth 邏輯待修改 */
 export const getSavedStatus = async (userId: string, articleId: string) => {
   const user = await client.fetch(
     GET_ARTICLES_SAVE_STATUS_BY_USER_ID,
@@ -233,6 +235,7 @@ export async function toggleLikeAction(articleId: string) {
   }
 }
 
+/* Auth 邏輯待修改 */
 export const getLikedStatus = async (userId: string, articleId: string) => {
   try {
     const article = await client.withConfig({ useCdn: false }).fetch(

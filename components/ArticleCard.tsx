@@ -10,6 +10,12 @@ import { EditButton } from './EditButton';
 import { deleteArticleAction } from '@/actions/server-actions';
 import { LikeButton } from './LikeButton';
 
+/* 
+  Omit<Type, Keys>
+    Type：原始的型別
+    Keys：要移除的屬性名稱
+    &: Intersection Type
+*/
 export type ArticlePageType = Omit<Article, 'author'> & {
   author?: Author;
   likes?: number;

@@ -17,7 +17,7 @@ interface LoadMoreProps {
   searchQuery?: string | string[] | null | undefined;
 }
 
-// 計算所有文章的 initialSavedStatus
+/* 這段移到server端，計算所有文章的 initialSavedStatus */
 async function fetchInitialSavedStatuses(
   articles: EnrichedArticlePageType[],
   userId?: string
@@ -48,7 +48,7 @@ function LoadMoreSpinner({
   const { data: session, status } = useSession();
   const userId = session?.id;
 
-  // 預先計算 initialArticles 的儲存狀態
+  /* 預先計算 initialArticles 的儲存狀態 */
   useEffect(() => {
     const loadInitialArticles = async () => {
       const enrichedArticles = await fetchInitialSavedStatuses(
@@ -68,7 +68,7 @@ function LoadMoreSpinner({
   useEffect(() => {
     console.log('trigger 2');
 
-    // 有問題來這裡找
+    /* 當滑到底時，useEffect 繼續從 Database 抓取 articles */
     if (inView && hasMore) {
       setIsLoading(true);
 
@@ -81,6 +81,7 @@ function LoadMoreSpinner({
         if (newArticles.length === 0) {
           setHasMore(false);
         } else {
+          /* 有抓到，繼續更新儲存狀態 */
           const enrichedNewArticles = await fetchInitialSavedStatuses(
             newArticles,
             userId
