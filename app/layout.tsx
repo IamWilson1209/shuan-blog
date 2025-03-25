@@ -75,7 +75,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    /* 
+      suppressHydrationWarning: server 初始渲染的背景色與 client 不相符
+      使用 shadcn handle theme, 
+      直接使用此屬性避免 hydration 警告 
+    */
+    <html lang="en" suppressHydrationWarning>
       <body className={`${workSans.variable} `}>
         <ThemeProvider
           attribute="class"
