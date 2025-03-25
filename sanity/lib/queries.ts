@@ -53,7 +53,7 @@ export const GET_AUTHOR_BY_ID_QUERY =
 }`);
 
 export const GET_ARTICLES_SAVE_STATUS_BY_USER_ID = defineQuery(
-  `*[_type == "author" && _id == $userId][0]{savedArticles}`
+  `*[_type == "author" && _id == $userId][0]{"savedArticles": savedArticles[]->_id}`
 )
 
 export const GET_AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`

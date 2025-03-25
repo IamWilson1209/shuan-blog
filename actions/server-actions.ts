@@ -240,10 +240,9 @@ export const saveArticle = async (articleId: string) => {
 
     /* 查詢此 user 儲存文章資訊 */
     const user = await client.withConfig({ useCdn: false }).fetch(GET_ARTICLES_SAVE_STATUS_BY_USER_ID, { userId })
-    const savedArticles = user.savedArticles || [];
 
     /* 檢查是否儲存：.some()檢查是否至少有一篇文章符合要儲存的articleId */
-    const isSaved = savedArticles.some((ref: { _ref: any; }) => ref._ref === articleId);
+    const isSaved = user?.savedArticles?.includes(articleId);
 
     if (isSaved) {
       /* 如果已經儲存過，取消儲存 */

@@ -36,6 +36,7 @@ export const authorType = defineType({
       title: 'Saved Articles',
       type: 'array',
       of: [{ type: 'reference', to: { type: 'article' } }],
+      validation: (rule) => rule.unique(),
     }),
   ],
   preview: {
