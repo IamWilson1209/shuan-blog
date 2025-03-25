@@ -44,6 +44,12 @@ export const GET_AUTHOR_BY_ID_QUERY =
   email,
   image,
   bio,
+  savedArticles[]-> {
+    _id,
+    title,
+    desc,
+    content
+  }
 }`);
 
 export const GET_ARTICLES_SAVE_STATUS_BY_USER_ID = defineQuery(

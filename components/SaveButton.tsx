@@ -35,7 +35,7 @@ const SaveButton = ({
 
     startTransition(async () => {
       try {
-        const result = await toggleSaveArticle(userId, articleId);
+        const result = await toggleSaveArticle(articleId);
         setIsSaved(result.isSaved);
         toast.success(
           result.isSaved ? 'Article has been saved' : 'Article has beed unsaved'
