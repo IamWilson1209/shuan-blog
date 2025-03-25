@@ -144,7 +144,7 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           {parsedContent ? (
             <article
-              className="prose max-w-4xl font-work-sans break-all dark:text-white-100/70"
+              className="prose dark:prose-invert max-w-4xl font-work-sans break-all dark:text-white-100/70"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (

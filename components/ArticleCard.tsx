@@ -1,17 +1,21 @@
 'use client';
 
-import { cn, formatDate } from '@/utils/utils';
+import { formatDate } from '@/utils/utils';
 import { Article, Author } from '@/sanity/types';
 import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
-import { Skeleton } from './ui/skeleton';
 import { EditButton } from './EditButton';
 import { deleteArticleAction } from '@/actions/server-actions';
-import { unstable_noStore as noStore } from 'next/cache';
 import { LikeButton } from './LikeButton';
 
+/* 
+  Omit<Type, Keys>
+    Type：原始的型別
+    Keys：要移除的屬性名稱
+    &: Intersection Type
+*/
 export type ArticlePageType = Omit<Article, 'author'> & {
   author?: Author;
   likes?: number;
@@ -27,7 +31,6 @@ const ArticleCard = ({
   userId?: string;
   initialSavedStatus: boolean;
 }) => {
-  // noStore(); // 確保資料即時更新（僅對 Server Component 有效，這裡可能無效）
   const {
     title,
     author,

@@ -70,14 +70,12 @@ const createCollection = async (similarityMetric: SimilarityMetric = "dot_produc
       metric: similarityMetric
     }
   })
-  console.log("createCollection response: ", res)
 }
 
 const loadSampleData = async () => {
   const collection = await db.collection(process.env.ASTRA_DB_COLLECTION)
 
   relatedData = await collectRelatedUrls(baseUrl);
-  console.log("收集到的相關 URL:", relatedData);
 
   for (const url of relatedData) {
     const content = await scrapePage(url)

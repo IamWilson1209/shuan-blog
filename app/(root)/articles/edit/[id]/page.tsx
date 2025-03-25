@@ -12,7 +12,9 @@ const EditPage = async ({ params }: { params?: Promise<{ id: string }> }) => {
 
   if (!session) redirect('/');
 
-  const article = await client.fetch(GET_ARTICLE_BY_ID_QUERY, { id });
+  const article = await client
+    .withConfig({ useCdn: false })
+    .fetch(GET_ARTICLE_BY_ID_QUERY, { id });
 
   if (!article) return notFound();
 

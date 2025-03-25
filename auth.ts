@@ -37,7 +37,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       const ghProfile = profile as unknown as GitHubProfile;
       const { id: ghId, login, bio } = ghProfile;
-      const id = ghId.toString();
+      const id = ghId;
 
       const existingUser = await client
         .withConfig({ useCdn: false }) /* Only fetch when user call */

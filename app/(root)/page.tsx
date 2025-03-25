@@ -3,7 +3,6 @@ import { SanityLive } from '@/sanity/lib/live';
 import LoadMoreSpinner from '@/components/LoadMoreSpinner';
 import { fetchArticlesAction } from '@/actions/server-actions';
 import { SquarePen } from 'lucide-react';
-import { auth } from '@/auth';
 
 import type { Metadata } from 'next';
 import { openGraphImage } from '../shared-metadata';
@@ -24,7 +23,6 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const query = (await searchParams).query;
-  const session = await auth();
   const initialArticles = await fetchArticlesAction(1, query);
 
   return (
