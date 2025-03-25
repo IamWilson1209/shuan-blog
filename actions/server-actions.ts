@@ -18,12 +18,15 @@ export const createArticleAction = async (
   const session = await auth();
 
   /* 如果查找不到登入資訊，返回序列化的錯誤訊息 */
-  if (!session) {
+  if (!session || !session.id) {
     return parseServerActionResponse({
       error: "Unauthenticated",
       status: "Error"
     })
   }
+
+  /* 宣告使用者id */
+  const userId = session.id;
 
   /*
     提取article資料： 
@@ -52,7 +55,7 @@ export const createArticleAction = async (
       },
       author: {
         _type: "reference",
-        _ref: session?.id,
+        _ref: userId,
       },
       content
     }
@@ -83,7 +86,7 @@ export const updateArticleAction = async (prevState: any, formData: FormData, co
     const session = await auth();
 
     /* 如果沒有登入，回傳Unauthenticated */
-    if (!session) {
+    if (!session || !session.id) {
       return parseServerActionResponse({
         error: "Unauthenticated",
         status: "Error"
@@ -135,7 +138,7 @@ export const deleteArticleAction = async (articleId: string) => {
     const session = await auth();
 
     /* 如果沒有登入，回傳Unauthenticated */
-    if (!session) {
+    if (!session || !session.id) {
       return parseServerActionResponse({
         error: "Unauthenticated",
         status: "Error"
@@ -196,14 +199,14 @@ export const fetchArticlesAction = async (page: number, sanityQuery?: string | s
 }
 
 /* 儲存文章 */
-export const toggleSaveArticle = async (articleId: string) => {
+export const saveArticle = async (articleId: string) => {
 
   try {
     /* 檢查登入資訊 */
     const session = await auth();
 
     /* 如果沒有登入，回傳Unauthenticated */
-    if (!session) {
+    if (!session || !session.id) {
       return parseServerActionResponse({
         error: "Unauthenticated",
         status: "Error"
@@ -272,8 +275,22 @@ export const toggleSaveArticle = async (articleId: string) => {
   }
 }
 
-/* Auth 邏輯待修改 */
-export const getSavedStatus = async (userId: string, articleId: string) => {
+/* 可能可以刪除：快速取得使用者儲存文章狀態 */
+export const getSavedStatus = async (articleId: string) => {
+  /* 檢查登入資訊 */
+  const session = await auth();
+
+  /* 如果沒有登入，回傳Unauthenticated */
+  if (!session || !session.id) {
+    return parseServerActionResponse({
+      error: "Unauthenticated",
+      status: "Error"
+    })
+  }
+
+  /* 宣告userId */
+  const userId = session.id;
+
   const user = await client.fetch(
     GET_ARTICLES_SAVE_STATUS_BY_USER_ID,
     { userId }
@@ -283,31 +300,50 @@ export const getSavedStatus = async (userId: string, articleId: string) => {
 }
 
 
-export async function toggleLikeAction(articleId: string) {
+/* 處理點擊愛心，更新 1.愛心數量 2.是否點愛心 */
+export async function likeArticle(articleId: string) {
   try {
+    /* 檢查登入資訊 */
     const session = await auth();
+
+    /* 如果沒有登入，回傳Unauthenticated */
     if (!session || !session.id) {
-      throw new Error('Unauthenticated');
+      return parseServerActionResponse({
+        error: "Unauthenticated",
+        status: "Error"
+      })
     }
 
+    /* 宣告userId */
     const userId = session.id;
+
+    /* 查找被點擊愛心的article，取得愛心數量，被哪些使用者點愛心 */
     const article = await client.withConfig({ useCdn: false }).fetch(
       GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY,
       { id: articleId }
     );
 
+    /* 如果找不到article，回傳錯誤 */
     if (!article) {
-      throw new Error('Article not found');
+      return parseServerActionResponse({
+        error: "Article not found",
+        status: "Error"
+      })
     }
 
+    /* 檢查是否被按過愛心 */
     const hasLiked = article.likedBy?.includes(userId);
+
+    /* 如果使用者曾經按過愛心，新愛心數量-1，反之+1 */
     const newLikes = hasLiked ? article.likes - 1 : article.likes + 1;
 
+    /* 更新這篇 article 新的使用者按讚列表 */
     const newLikedBy = hasLiked
       ? article.likedBy.filter((id: string) => id !== userId)
       : [...(article.likedBy || []), userId];
 
-    const updatedArticle = await writeClient
+    /* patch更新這篇文章的心愛心數，按讚列表 */
+    await writeClient
       .patch(articleId)
       .set({
         likes: newLikes,
@@ -315,12 +351,23 @@ export async function toggleLikeAction(articleId: string) {
       })
       .commit();
 
+    /* 使顯示頁面路徑cache失效，在下次訪問時重新生成該頁面的內容 */
     revalidatePath(`/articles/${articleId}`);
     revalidatePath(`/users/${article.author?._id}`);
-    return { status: 'Success', likes: newLikes, hasLiked: !hasLiked };
+
+    /* 回傳更新結果 */
+    return parseServerActionResponse({
+      error: "",
+      status: "Success",
+      likes: newLikes,
+      hasLiked: !hasLiked
+    })
   } catch (error) {
-    console.error('Error toggling like:', error);
-    return { status: 'Error', error: 'Failed to toggle like' };
+    console.error('Error handle like:', error);
+    parseServerActionResponse({
+      error: "Error handle like",
+      status: "Error",
+    })
   }
 }
 

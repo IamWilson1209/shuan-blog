@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { Heart } from 'lucide-react';
 import { toast } from 'sonner';
-import { toggleLikeAction } from '@/actions/server-actions';
+import { likeArticle } from '@/actions/server-actions';
 import { sendGTMEvent } from '@next/third-parties/google';
 
 interface LikeButtonProps {
@@ -24,7 +24,7 @@ export const LikeButton = ({
 
   const handleLike = () => {
     startTransition(async () => {
-      const result = await toggleLikeAction(articleId);
+      const result = await likeArticle(articleId);
       if (result.status === 'Success') {
         setLikes(result.likes);
         setHasLiked(result.hasLiked);

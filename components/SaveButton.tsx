@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { BookmarkIcon } from 'lucide-react';
 import { Button } from './ui/button';
-import { toggleSaveArticle } from '@/actions/server-actions';
+import { saveArticle } from '@/actions/server-actions';
 import { toast } from 'sonner';
 import { sendGTMEvent } from '@next/third-parties/google';
 
@@ -35,7 +35,7 @@ const SaveButton = ({
 
     startTransition(async () => {
       try {
-        const result = await toggleSaveArticle(articleId);
+        const result = await saveArticle(articleId);
         setIsSaved(result.isSaved);
         toast.success(
           result.isSaved ? 'Article has been saved' : 'Article has beed unsaved'
