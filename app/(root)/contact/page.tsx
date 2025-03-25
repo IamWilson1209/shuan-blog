@@ -12,7 +12,6 @@ export const metadata: Metadata = {
     'Contact Me Information: Email:zenfonlee@gmail.com, Phone:+886-965-650-099, GitHub: https://github.com/IamWilson1209, LinkedIn: https://linkedin.com/in/weishiuan',
   openGraph: {
     ...openGraphImage,
-    images: ['Shuan.jpg'],
     title: '李瑋軒 | Wei-shiuan Lee',
   },
 };
