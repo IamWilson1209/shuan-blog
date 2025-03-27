@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import SaveButton from '@/components/SaveButton';
-import { useSession } from 'next-auth/react';
 
 export const EditButton = ({
   id,
@@ -30,8 +29,6 @@ export const EditButton = ({
   const [isPending, setIsPending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  // const { data: session, status } = useSession();
-  // const userId = session?.id;
   const isLoggedIn = !!userId;
   const sameAuthor = userId === authorId;
 

@@ -10,14 +10,14 @@ import { formSchema } from '@/schema/article-edit-form-validation';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { toast } from 'sonner';
-import { ArticlePageType } from './ArticleCard';
+import { ArticleCardProps } from './ArticleCard';
 import {
   createArticleAction,
   updateArticleAction,
 } from '@/actions/server-actions';
 import Image from 'next/image';
 
-const ArticleEditForm = ({ article }: { article?: ArticlePageType }) => {
+const ArticleEditForm = ({ article }: { article?: ArticleCardProps }) => {
   const [content, setContent] = useState(article?.content || '');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [previewUrl, setPreviewUrl] = useState<string>(article?.image || '');

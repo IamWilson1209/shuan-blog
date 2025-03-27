@@ -1,7 +1,7 @@
 'use client';
 
 import { formatDate } from '@/utils/utils';
-import { Article, Author } from '@/sanity/types';
+import { Author } from '@/sanity/types';
 import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -16,10 +16,21 @@ import { LikeButton } from './LikeButton';
     Keys：要移除的屬性名稱
     &: Intersection Type
 */
-export type ArticlePageType = Omit<Article, 'author'> & {
-  author?: Author;
+export type ArticleCardProps = {
+  _id: string;
+  title: string;
+  slug?: { _type: 'slug'; current: string };
+  _createdAt?: string;
+  author?: Author | { _id: string; name: string; image: string; bio: string };
+  views?: number;
+  desc?: string;
+  category?: string;
+  content?: string;
+  image?: string;
   likes?: number;
   likedBy?: string[];
+  initialSavedStatus?: boolean; // 可選，UserPage 使用
+  saveStatus?: boolean; // 可選，其他頁面使用
 };
 
 const ArticleCard = ({
@@ -27,7 +38,7 @@ const ArticleCard = ({
   userId,
   initialSavedStatus,
 }: {
-  article: ArticlePageType;
+  article: ArticleCardProps;
   userId?: string;
   initialSavedStatus: boolean;
 }) => {

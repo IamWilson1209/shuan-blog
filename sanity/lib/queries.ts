@@ -44,12 +44,7 @@ export const GET_AUTHOR_BY_ID_QUERY =
   email,
   image,
   bio,
-  savedArticles[]-> {
-    _id,
-    title,
-    desc,
-    content
-  }
+  "savedArticles": savedArticles[]->_id
 }`);
 
 export const GET_ARTICLES_SAVE_STATUS_BY_USER_ID = defineQuery(
@@ -93,6 +88,34 @@ export const GET_ARTICLES_BY_AUTHOR_QUERY = defineQuery(
   likes,
   "likedBy": likedBy[]->_id
   }`)
+
+export const GET_USERPAGE_DATA_QUERY = defineQuery(`
+  *[_type == "author" && _id == $userId][0] {
+    _id,
+    id,
+    name,
+    username,
+    email,
+    image,
+    bio,
+    "savedArticles": savedArticles[]->_id,
+    "articles": *[_type == "article" && author._ref == $userId] | order(_createdAt desc) {
+      _id,
+      title,
+      slug,
+      _createdAt,
+      author -> {
+        _id, name, image, bio
+      },
+      views,
+      desc,
+      category,
+      image,
+      likes,
+      "likedBy": likedBy[]->_id
+    }
+  }
+`);
 
 export const GET_PLAYLIST_BY_SLUG_QUERY =
   defineQuery(`*[_type == "playlist" && slug.current == $slug][0]{

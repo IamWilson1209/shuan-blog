@@ -3,10 +3,11 @@
 import { auth } from "@/auth"
 import { parseServerActionResponse } from "@/utils/utils";
 import { client } from "@/sanity/lib/client";
-import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_ARTICLES_SAVE_STATUS_BY_USER_ID, GET_AUTHOR_BY_ID_QUERY } from "@/sanity/lib/queries";
+import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_ARTICLES_SAVE_STATUS_BY_USER_ID, GET_AUTHOR_BY_ID_QUERY, GET_USERPAGE_DATA_QUERY } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";
 import { revalidatePath } from "next/cache";
 import slugify from "slugify";
+import { Article } from "@/sanity/types";
 
 /* 新增 article */
 export const createArticleAction = async (
@@ -173,7 +174,7 @@ export const deleteArticleAction = async (articleId: string) => {
   }
 }
 
-/* 無限滑動一次取得10篇article*/
+/* 無限滑動一次取得10篇article */
 const MAX_LIMIT = 10
 export const fetchArticlesAction = async (page: number, sanityQuery?: string | string[] | null | undefined) => {
   /* 宣告開始搜尋，結束搜尋的index */
@@ -181,20 +182,88 @@ export const fetchArticlesAction = async (page: number, sanityQuery?: string | s
   const end = page * MAX_LIMIT;
 
   try {
+    /* 獲取使用者登入狀態 */
+    const session = await auth();
+    const userId = session?.id;
+
     /* 使用sanity client取得從start到end index的文章 */
     const articles = await client.withConfig({ useCdn: false }).fetch(GET_ARTICLES_QUERY, {
       start,
       end,
       sanityQuery: sanityQuery || null,
     });
+
+    /* 如果使用者沒有登入，直接返回獲取的文章 */
+    if (!userId) {
+      return articles;
+    }
+
+    /* 如果有登入，還要回傳儲存狀態，查詢使用者儲存文章列表 */
+    const userData = await client.withConfig({ useCdn: false }).fetch(GET_ARTICLES_SAVE_STATUS_BY_USER_ID, { userId });
+    const savedArticleIds = userData.savedArticles || [];
+
+    /* 整合儲存狀態到article */
+    const articlesWithSaveStatus = articles.map((article: Article) => ({
+      ...article,
+      saveStatus: savedArticleIds.includes(article._id)
+    }))
+
     /* 回傳取得的articles */
-    return articles;
+    return articlesWithSaveStatus;
   } catch (error) {
     console.error(`Server: Error fetching page ${page}:`, error);
     return parseServerActionResponse({
       error: "Error fetching articles",
       status: "Error"
     })
+  }
+}
+
+/* 獲取使用者頁面資料的邏輯 */
+export const fetchUserPageDataAction = async () => {
+  /* 檢查登入資訊 */
+  const session = await auth();
+
+  /* 如果沒有登入，回傳Unauthenticated */
+  if (!session || !session.id) {
+    return parseServerActionResponse({
+      error: "Unauthenticated",
+      status: "Error"
+    })
+  }
+
+  /* 宣告使用者變數 */
+  const userId = session.id;
+
+  /* 獲取所有使用者頁面需要的資料 */
+  const userData = await client.withConfig({ useCdn: false }).fetch(GET_USERPAGE_DATA_QUERY, { userId });
+
+  /* 如果查無使用者資料，錯誤 */
+  if (!userData) {
+    return parseServerActionResponse({
+      error: "User not found",
+      status: "Error"
+    })
+  }
+
+  /* 整合文章與使用者狀態 */
+  const articleWithSaveStatus = userData.articles.map((article: Article) => ({
+    ...article,
+    saveStatus: userData.savedArticles.includes(article._id),
+  }))
+
+  return {
+    user: {
+      _id: userData._id,
+      id: userData.id,
+      name: userData.name,
+      username: userData.username,
+      email: userData.email,
+      image: userData.image,
+      bio: userData.bio,
+      savedArticleIds: userData.savedArticleIds,
+    },
+    articles: articleWithSaveStatus,
   }
 }
 

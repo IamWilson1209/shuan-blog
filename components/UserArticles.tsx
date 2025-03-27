@@ -1,38 +1,25 @@
-import { client } from '@/sanity/lib/client';
-import { GET_ARTICLES_BY_AUTHOR_QUERY } from '@/sanity/lib/queries';
 import React from 'react';
-import ArticleCard, { ArticlePageType } from './ArticleCard';
+import ArticleCard from './ArticleCard';
+import { ArticleWithSaveStatus } from '@/app/(root)/users/[id]/page';
 
 const UserArticles = async ({
   id,
-  userId,
-  savedArticleIds,
+  articles,
 }: {
   id: string;
-  userId: string | undefined;
-  savedArticleIds: Set<string> | Set<unknown>;
+  articles: Array<ArticleWithSaveStatus>;
 }) => {
-  const userArticles = await client
-    .withConfig({ useCdn: false })
-    .fetch(GET_ARTICLES_BY_AUTHOR_QUERY, { id });
-
-  /* 將每篇文章與 savedArticleIds 匹配，計算 initialSavedStatus */
-  const articleWithSaveStatus = userArticles.map(
-    (article: ArticlePageType) => ({
-      ...article,
-      initialSavedStatus: savedArticleIds.has(article._id),
-    })
-  );
+  console.log('articles: ', articles);
 
   return (
     <>
-      {userArticles.length > 0 ? (
-        userArticles.map((articles: ArticlePageType) => (
+      {articles.length > 0 ? (
+        articles.map((article: ArticleWithSaveStatus) => (
           <ArticleCard
-            key={articles?._id}
-            article={articles}
-            userId={userId}
-            initialSavedStatus={articleWithSaveStatus.initialSavedStatus}
+            key={article?._id}
+            article={article}
+            userId={id}
+            initialSavedStatus={article.saveStatus}
           />
         ))
       ) : (

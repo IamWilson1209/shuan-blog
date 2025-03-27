@@ -10,6 +10,7 @@ import Image from 'next/image';
 import UserArticles from '@/components/UserArticles';
 import LoadingSkeleton from '@/components/LoadingSkeleton';
 import { Metadata, ResolvingMetadata } from 'next';
+import { fetchUserPageDataAction } from '@/actions/server-actions';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -35,26 +36,42 @@ export async function generateMetadata(
   };
 }
 
+export type ArticleWithSaveStatus = {
+  _id: string;
+  title: string;
+  slug: {
+    _type: 'slug';
+    current: string;
+  };
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string;
+    image: string;
+    bio: string;
+  };
+  views: number;
+  desc: string;
+  category: string;
+  image: string;
+  likes: number;
+  likedBy: string[];
+  saveStatus: boolean;
+};
+
 const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
   const session = await auth();
-  const userId = session?.id;
 
-  // 並行查詢使用者資料和當前使用者的儲存文章
-  const [user, savedArticlesArray] = await Promise.all([
-    client.fetch(GET_AUTHOR_BY_ID_QUERY, { id }),
-    userId
-      ? client.fetch(GET_ARTICLES_SAVE_STATUS_BY_USER_ID, { userId })
-      : Promise.resolve({ savedArticles: [] }),
-  ]);
-  if (!user) return notFound();
+  /* 使用 Server Action 獲取使用者頁面資料 */
+  const data = await fetchUserPageDataAction();
 
-  // 將 savedArticles 轉為 Set 以便快速查找
-  const savedArticleIds = new Set(
-    savedArticlesArray.savedArticles?.map(
-      (ref: { _ref: string }) => ref._ref
-    ) || []
-  );
+  /* 沒查到，回傳 not found */
+  if (!data) return notFound();
+
+  /* 解構資料 */
+  const { user, articles } = data;
+
   return (
     <section className="profile_container">
       <div className="profile_card">
@@ -86,11 +103,7 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <hr className="my-4 border-black-100/20" />
         <ul className="card_grid-sm">
           <Suspense fallback={<ArticleLoading />}>
-            <UserArticles
-              id={id}
-              userId={userId}
-              savedArticleIds={savedArticleIds}
-            />
+            <UserArticles id={id} articles={articles} />
           </Suspense>
         </ul>
       </div>

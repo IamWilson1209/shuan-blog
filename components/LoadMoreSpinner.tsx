@@ -2,45 +2,19 @@
 
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
-import ArticleCard, { ArticlePageType } from './ArticleCard';
-import { fetchArticlesAction, getSavedStatus } from '@/actions/server-actions';
+import ArticleCard, { ArticleCardProps } from './ArticleCard';
+import { fetchArticlesAction } from '@/actions/server-actions';
 import { useSession } from 'next-auth/react';
 import LoadingSkeleton from './LoadingSkeleton';
 
-/* 擴展 ArticlePageType，添加 initialSavedStatus */
-export interface EnrichedArticlePageType extends ArticlePageType {
-  initialSavedStatus: boolean;
-}
-
 interface LoadMoreProps {
-  initialArticles: EnrichedArticlePageType[];
+  initialArticles: ArticleCardProps[];
   searchQuery?: string | string[] | null | undefined;
 }
 
-/* 這段移到server端，計算所有文章的 initialSavedStatus */
-async function fetchInitialSavedStatuses(
-  articles: EnrichedArticlePageType[],
-  userId?: string
-) {
-  const statuses = await Promise.all(
-    articles.map((article) =>
-      userId ? getSavedStatus(userId, article._id) : Promise.resolve(false)
-    )
-  );
-  return articles.map((article, index) => ({
-    ...article,
-    initialSavedStatus: statuses[index],
-  }));
-}
-
-function LoadMoreSpinner({
-  initialArticles,
-  searchQuery,
-  // userId,
-}: LoadMoreProps) {
+function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
   const { ref, inView } = useInView();
-  const [articles, setArticles] =
-    useState<EnrichedArticlePageType[]>(initialArticles);
+  const [articles, setArticles] = useState<ArticleCardProps[]>(initialArticles);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
@@ -48,26 +22,10 @@ function LoadMoreSpinner({
   const { data: session, status } = useSession();
   const userId = session?.id;
 
-  /* 預先計算 initialArticles 的儲存狀態 */
-  useEffect(() => {
-    const loadInitialArticles = async () => {
-      const enrichedArticles = await fetchInitialSavedStatuses(
-        initialArticles,
-        userId
-      );
-      setArticles(enrichedArticles);
-    };
-    if (status !== 'loading') {
-      loadInitialArticles();
-    }
-  }, [initialArticles, session, status]);
-
   useEffect(() => {
     pageRef.current = page;
   }, [page]);
   useEffect(() => {
-    console.log('trigger 2');
-
     /* 當滑到底時，useEffect 繼續從 Database 抓取 articles */
     if (inView && hasMore) {
       setIsLoading(true);
@@ -82,11 +40,7 @@ function LoadMoreSpinner({
           setHasMore(false);
         } else {
           /* 有抓到，繼續更新儲存狀態 */
-          const enrichedNewArticles = await fetchInitialSavedStatuses(
-            newArticles,
-            userId
-          );
-          setArticles((prev) => [...prev, ...enrichedNewArticles]);
+          setArticles((prev) => [...prev, ...newArticles]);
           setPage((prev) => prev + 1);
         }
         setIsLoading(false);
@@ -99,7 +53,7 @@ function LoadMoreSpinner({
     <>
       <ul className="mt-5 card_grid pb-8">
         {articles.length > 0 ? (
-          articles.map((article: EnrichedArticlePageType) => (
+          articles.map((article: ArticleCardProps) => (
             <ArticleCard
               key={article?._id}
               article={article}
