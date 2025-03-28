@@ -47,9 +47,12 @@ export const GET_AUTHOR_BY_ID_QUERY =
   "savedArticles": savedArticles[]->_id
 }`);
 
-export const GET_ARTICLES_SAVE_STATUS_BY_USER_ID = defineQuery(
+export const GET_USER_SAVED_ARTICLES = defineQuery(
   `*[_type == "author" && _id == $userId][0]{"savedArticles": savedArticles[]->_id}`
 )
+
+export const GET_USER_LIKED_ARTICLES = defineQuery(
+  `*[_type == "article" && $userId in likedBy[]._ref] {_id}`)
 
 export const GET_AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`
   *[_type == "author" && id == $id][0]{
@@ -71,6 +74,7 @@ export const GET_ARTICLE_VIEWS_BY_ID_QUERY = defineQuery(
 export const GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY = defineQuery(
   `*[_type == "article" && _id == $id][0]{likes, "likedBy": likedBy[]->_id}`
 )
+
 
 export const GET_ARTICLES_BY_AUTHOR_QUERY = defineQuery(
   `*[_type == "article" && author._ref == $id] | order(_createdAt desc){

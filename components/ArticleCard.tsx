@@ -51,9 +51,6 @@ const ArticleCard = ({
     likedBy,
   } = article;
 
-  // O(1)
-  const initialHasLiked = userId ? likedBy?.includes(userId) : false;
-
   return (
     <li className="relative article-page-card group">
       <div className="absolute top-2 right-5">
@@ -94,11 +91,7 @@ const ArticleCard = ({
             <EyeIcon className="size-6 text-gray-600" />
             <span className="font-medium text-gray-600">{views}</span>
           </div>
-          <LikeButton
-            articleId={_id}
-            initialLikes={likes}
-            initialHasLiked={initialHasLiked}
-          />
+          <LikeButton articleId={_id} initialLikes={likes} />
         </div>
       </div>
       <Link href={`/articles/${_id}`}>

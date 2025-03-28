@@ -3,7 +3,7 @@
 import { auth } from "@/auth"
 import { parseServerActionResponse } from "@/utils/utils";
 import { client } from "@/sanity/lib/client";
-import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_ARTICLES_SAVE_STATUS_BY_USER_ID, GET_AUTHOR_BY_ID_QUERY, GET_USERPAGE_DATA_QUERY } from "@/sanity/lib/queries";
+import { GET_ARTICLE_BY_ID_QUERY, GET_ARTICLE_LIKES_LIKEDBY_BY_ID_QUERY, GET_ARTICLES_QUERY, GET_USER_SAVED_ARTICLES, GET_AUTHOR_BY_ID_QUERY, GET_USERPAGE_DATA_QUERY } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";
 import { revalidatePath } from "next/cache";
 import slugify from "slugify";
@@ -293,7 +293,7 @@ export const saveArticle = async (articleId: string) => {
     }
 
     /* 查詢此 user 儲存文章資訊 */
-    const user = await client.withConfig({ useCdn: false }).fetch(GET_ARTICLES_SAVE_STATUS_BY_USER_ID, { userId })
+    const user = await client.withConfig({ useCdn: false }).fetch(GET_USER_SAVED_ARTICLES, { userId })
 
     /* 檢查是否儲存：.some()檢查是否至少有一篇文章符合要儲存的articleId */
     const isSaved = user?.savedArticles?.includes(articleId);
@@ -345,7 +345,7 @@ export const getSavedStatus = async (articleId: string) => {
   const userId = session.id;
 
   const user = await client.fetch(
-    GET_ARTICLES_SAVE_STATUS_BY_USER_ID,
+    GET_USER_SAVED_ARTICLES,
     { userId }
   );
   const savedArticles = user?.savedArticles || [];

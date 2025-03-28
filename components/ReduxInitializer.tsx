@@ -5,7 +5,11 @@ import { useDispatch } from 'react-redux';
 import { setSavedArticles } from '@/app/redux/save-articles/slice';
 import { useSession } from 'next-auth/react';
 import { client } from '@/sanity/lib/client';
-import { GET_ARTICLES_SAVE_STATUS_BY_USER_ID } from '@/sanity/lib/queries';
+import {
+  GET_USER_LIKED_ARTICLES,
+  GET_USER_SAVED_ARTICLES,
+} from '@/sanity/lib/queries';
+import { setLikedArticles } from '@/app/redux/like-articles/slice';
 
 export const ReduxInitializer = () => {
   const dispatch = useDispatch();
@@ -16,12 +20,11 @@ export const ReduxInitializer = () => {
       /* 如果有登入，獲取這位使用者的初始儲存狀態 */
       if (session?.id) {
         /* 取得作者所有儲存文章的狀態 */
-        const userData = await client.fetch(
-          GET_ARTICLES_SAVE_STATUS_BY_USER_ID,
-          {
+        const userData = await client
+          .withConfig({ useCdn: false })
+          .fetch(GET_USER_SAVED_ARTICLES, {
             userId: session.id,
-          }
-        );
+          });
 
         /* 
           設置 Redux 狀態
@@ -39,9 +42,21 @@ export const ReduxInitializer = () => {
 
         /* 將轉換後的 savedArticles 設置到 Redux store */
         dispatch(setSavedArticles(savedArticles));
+
+        /*  */
+        const likedArticlesData = await client
+          .withConfig({ useCdn: false })
+          .fetch(GET_USER_LIKED_ARTICLES, {
+            userId: session.id,
+          });
+        const likedArticleIds = likedArticlesData.map(
+          (article: { _id: string }) => article._id
+        );
+        dispatch(setLikedArticles(likedArticleIds));
       } else if (status === 'unauthenticated') {
         /* 未登入時清空狀態 */
         dispatch(setSavedArticles({}));
+        dispatch(setLikedArticles([]));
       }
     };
 
