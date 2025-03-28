@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { BookmarkIcon } from 'lucide-react';
 import { Button } from './ui/button';
@@ -78,7 +78,7 @@ const SaveButton = ({ articleId, onlyIcon }: SaveButtonProps) => {
         size={24}
         className={`transition-colors ${
           isPending
-            ? 'text-gray-400 animate-pulse' // 更新中顯示灰色並閃爍
+            ? 'text-gray-400 animate-pulse'
             : isSaved
               ? 'text-black dark:text-white-100/80 fill-current stroke-none'
               : 'text-gray-600'

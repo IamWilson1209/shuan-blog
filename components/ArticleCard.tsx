@@ -58,7 +58,7 @@ const ArticleCard = ({
           id={_id}
           authorId={author?._id}
           deleteArticleAction={deleteArticleAction}
-          userId={userId}
+          // userId={userId}
         />
       </div>
       <div className="flex-between mt-5 gap-5">

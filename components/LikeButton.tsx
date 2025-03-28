@@ -19,13 +19,18 @@ export const LikeButton = ({ articleId, initialLikes }: LikeButtonProps) => {
   const likedArticles = useSelector(
     (state: RootState) => state.likedArticles.likedArticles
   );
-  const hasLiked = likedArticles[articleId] ?? false; // Redux 提供初始值
-  const [likes, setLikes] = useState(initialLikes ?? 0); // 本地管理 likes
+
+  /* Redux提供文章是否被使用者系喜歡的初始狀態 */
+  const hasLiked = likedArticles[articleId] ?? false;
+
+  /* client管理文章喜歡數量，防止一直去後端獲取資料 */
+  const [likes, setLikes] = useState(initialLikes ?? 0);
   const [isPending, startTransition] = useTransition();
 
   const handleLike = () => {
+    /* 樂觀更新 */
     const newHasLiked = !hasLiked;
-    setLikes(likes + (newHasLiked ? 1 : -1)); // 本地更新 likes
+    setLikes(likes + (newHasLiked ? 1 : -1));
 
     startTransition(async () => {
       /* 發送server action改變喜愛數的數字、儲存狀態 */
@@ -66,7 +71,7 @@ export const LikeButton = ({ articleId, initialLikes }: LikeButtonProps) => {
       <Heart
         className={`size-5 hover:fill-red-500 hover:text-red-500 transition-colors ${
           isPending
-            ? 'fill-red-400 text-red-400 animate-pulse' // 更新中顯示灰色並閃爍
+            ? 'fill-red-400 text-red-400 animate-pulse'
             : hasLiked
               ? 'fill-red-500 text-red-500'
               : 'text-gray-600'

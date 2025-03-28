@@ -46,7 +46,7 @@ const Navbar = async () => {
                 action={async () => {
                   'use server';
 
-                  await signOut({ redirectTo: '/' });
+                  await signOut({ redirectTo: `/logout?t=${Date.now()}` }); // 添加時間戳
                 }}
               >
                 <button type="submit">

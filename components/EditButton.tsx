@@ -12,22 +12,22 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import SaveButton from '@/components/SaveButton';
+import { useSession } from 'next-auth/react';
 
 export const EditButton = ({
   id,
   authorId,
   deleteArticleAction,
-  userId,
 }: {
   id: string;
   authorId: string | undefined;
   deleteArticleAction: (id: string) => Promise<any>;
-  userId: string | undefined;
 }) => {
   const [isPending, setIsPending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const sameAuthor = userId === authorId;
+  const { data: session, status } = useSession();
+  const sameAuthor = status === 'authenticated' && session?.id === authorId;
 
   const handleDelete = async () => {
     setIsPending(true);
@@ -35,8 +35,8 @@ export const EditButton = ({
       const result = await deleteArticleAction(id);
       if (result.status === 'Success') {
         setIsOpen(false);
-        router.push(`/users/${userId}`);
-        toast.success('Article has been created');
+        router.push(`/users/${session.id}`);
+        toast.success('Article has been deleted');
       }
     } catch (error) {
       toast.error('Event has not been created');
