@@ -13,7 +13,7 @@ const UserArticles = async ({
     <>
       {articles.length > 0 ? (
         articles.map((article: ArticleWithSaveStatus) => (
-          <ArticleCard key={article?._id} article={article} userId={id} />
+          <ArticleCard key={article?._id} article={article} />
         ))
       ) : (
         <p className="no-result">No articles yet</p>
