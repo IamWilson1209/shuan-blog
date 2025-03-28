@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
 import ArticleCard, { ArticleCardProps } from './ArticleCard';
 import { fetchArticlesAction } from '@/actions/server-actions';
-import { useSession } from 'next-auth/react';
 import LoadingSkeleton from './LoadingSkeleton';
 
 interface LoadMoreProps {
@@ -19,8 +18,6 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
   const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const pageRef = useRef(page);
-  const { data: session, status } = useSession();
-  const userId = session?.id;
 
   useEffect(() => {
     pageRef.current = page;
@@ -55,7 +52,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
       <ul className="mt-5 card_grid pb-8">
         {articles.length > 0 ? (
           articles.map((article: ArticleCardProps) => (
-            <ArticleCard key={article?._id} article={article} userId={userId} />
+            <ArticleCard key={article?._id} article={article} />
           ))
         ) : (
           <p className="no-results">No articles found</p>

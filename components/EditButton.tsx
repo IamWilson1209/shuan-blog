@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import SaveButton from '@/components/SaveButton';
-import { useSession } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/stores';
 
@@ -40,6 +39,7 @@ export const EditButton = ({
       const result = await deleteArticleAction(id);
       if (result.status === 'Success') {
         setIsOpen(false);
+        /* 待優化 */
         router.push(`/users/${session.id}`);
         toast.success('Article has been deleted');
       }

@@ -12,11 +12,8 @@ import Views from '@/components/Views';
 import { notFound } from 'next/navigation';
 import markdownit from 'markdown-it';
 import { Timer } from 'lucide-react';
-import { auth } from '@/auth';
-import { getLikedStatus, getSavedStatus } from '@/actions/server-actions';
 import SaveButton from '@/components/SaveButton';
 import { LikeButton } from '@/components/LikeButton';
-
 import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
@@ -43,38 +40,28 @@ export async function generateMetadata(
 }
 
 const md = markdownit();
+
+/* 啟用ppr機制 */
 export const experimental_ppr = true;
 
 const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
-  const session = await auth();
-  const currentUserId = session?.id || null;
-  const isLoggedIn = !!currentUserId;
-
-  const initialSavedStatus = isLoggedIn
-    ? await getSavedStatus(currentUserId, id)
-    : false;
 
   /* 
     Docs: https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#parallel-and-sequential-data-fetching
-    Parallel data fetching
+    平行資料獲取，效率較高
   */
-  const [article, likedStatus] = await Promise.all([
+  const [article] = await Promise.all([
     client.withConfig({ useCdn: false }).fetch(GET_ARTICLE_BY_ID_QUERY, { id }),
     // client.fetch(GET_PLAYLIST_BY_SLUG_QUERY, {
     //   slug: 'user-playlist',
     // }),
-    // server action: getLikedStatus
-    getLikedStatus(currentUserId, id),
   ]);
 
-  const hasLiked =
-    likedStatus?.status === 'Success' ? likedStatus.hasLiked : false;
-
-  console.log('hasLiked: ', hasLiked);
-
+  /* 解析markdown資料 */
   const parsedContent = md.render(article?.content || '');
 
+  /* 如果沒有找到，導到notFound */
   if (!article) return notFound();
 
   return (
@@ -118,19 +105,9 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <div className="flex gap-3 items-center">
               <p className="category-tag"># {article?.category}</p>
               <div className="px-2">
-                <LikeButton
-                  articleId={id}
-                  initialLikes={likedStatus?.likedNumber}
-                  initialHasLiked={likedStatus?.hasLiked}
-                />
+                <LikeButton articleId={id} initialLikes={article.likes} />
               </div>
-              <SaveButton
-                onlyIcon={false}
-                articleId={id}
-                userId={currentUserId}
-                initialSavedStatus={initialSavedStatus}
-                isLoggedIn={isLoggedIn}
-              />
+              <SaveButton onlyIcon={false} articleId={id} />
             </div>
           </div>
           <hr className="mt-8" />

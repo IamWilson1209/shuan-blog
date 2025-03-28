@@ -8,6 +8,7 @@ import { sendGTMEvent } from '@next/third-parties/google';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/stores';
 import { updateLikeStatus } from '@/app/redux/like-articles/slice';
+import { signIn } from 'next-auth/react';
 
 interface LikeButtonProps {
   articleId: string;
@@ -16,18 +17,42 @@ interface LikeButtonProps {
 
 export const LikeButton = ({ articleId, initialLikes }: LikeButtonProps) => {
   const dispatch = useDispatch();
+
+  /* Redux取得使用者的登入狀態 */
+  const { session, status } = useSelector((state: RootState) => state.auth);
+  const userId = session?.id;
+
+  /* Redux提供文章是否被使用者喜歡的初始狀態 */
   const likedArticles = useSelector(
     (state: RootState) => state.likedArticles.likedArticles
   );
-
-  /* Redux提供文章是否被使用者系喜歡的初始狀態 */
   const hasLiked = likedArticles[articleId] ?? false;
 
   /* client管理文章喜歡數量，防止一直去後端獲取資料 */
   const [likes, setLikes] = useState(initialLikes ?? 0);
   const [isPending, startTransition] = useTransition();
 
+  /* 處裡點擊愛心事件 */
   const handleLike = () => {
+    if (!userId) {
+      toast(
+        <p className="font-work-sans text-sm">
+          Dear writer, you're not login yet
+        </p>,
+        {
+          description: (
+            <p className="font-work-sans">Please login to save your articles</p>
+          ),
+          action: {
+            label: <p className="font-work-sans">Login</p>,
+            onClick: () => {
+              signIn('github');
+            },
+          },
+        }
+      );
+      return;
+    }
     /* 樂觀更新 */
     const newHasLiked = !hasLiked;
     setLikes(likes + (newHasLiked ? 1 : -1));
@@ -46,7 +71,13 @@ export const LikeButton = ({ articleId, initialLikes }: LikeButtonProps) => {
           })
         );
         /* toast 出消息給使用者知道 */
-        toast.success(result.hasLiked ? 'Liked!' : 'Unliked!');
+        toast.success(
+          result.hasLiked ? (
+            <p className="font-work-sans">Liked!</p>
+          ) : (
+            <p className="font-work-sans">Unliked!</p>
+          )
+        );
 
         /* 像Google Analytics發送 GTM 事件 */
         sendGTMEvent({

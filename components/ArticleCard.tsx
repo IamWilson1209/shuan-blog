@@ -31,12 +31,7 @@ export type ArticleCardProps = {
   likedBy?: string[];
 };
 
-const ArticleCard = ({
-  article,
-}: {
-  article: ArticleCardProps;
-  userId?: string;
-}) => {
+const ArticleCard = ({ article }: { article: ArticleCardProps }) => {
   const {
     title,
     author,
