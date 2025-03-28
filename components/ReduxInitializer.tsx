@@ -14,6 +14,7 @@ import {
   setLikedArticles,
 } from '@/app/redux/like-articles/slice';
 import { useRouter } from 'next/navigation';
+import { setAuthState } from '@/app/redux/auth/slice';
 
 export const ReduxInitializer = () => {
   const router = useRouter();
@@ -21,6 +22,7 @@ export const ReduxInitializer = () => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    dispatch(setAuthState({ session, status }));
     const initializeSavedArticles = async () => {
       /* 如果有登入，獲取這位使用者的初始儲存狀態 */
       if (session?.id) {

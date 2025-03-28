@@ -13,6 +13,8 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import SaveButton from '@/components/SaveButton';
 import { useSession } from 'next-auth/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/stores';
 
 export const EditButton = ({
   id,
@@ -23,12 +25,15 @@ export const EditButton = ({
   authorId: string | undefined;
   deleteArticleAction: (id: string) => Promise<any>;
 }) => {
+  const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
-  const { data: session, status } = useSession();
+
+  /* 用Redux取得全局使用者登入狀態 */
+  const { session, status } = useSelector((state: RootState) => state.auth);
   const sameAuthor = status === 'authenticated' && session?.id === authorId;
 
+  /* 處裡刪除文章 */
   const handleDelete = async () => {
     setIsPending(true);
     try {
@@ -39,14 +44,14 @@ export const EditButton = ({
         toast.success('Article has been deleted');
       }
     } catch (error) {
-      toast.error('Event has not been created');
+      toast.error('Article delete failed');
     } finally {
       setIsPending(false);
     }
   };
 
+  /* 當 sameAuthor 為 true 時（使用者是作者），顯示編輯和刪除選項 */
   return sameAuthor ? (
-    // 當 sameAuthor 為 true 時（使用者是作者），顯示編輯和刪除選項
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger>
         <Ellipsis />
@@ -74,7 +79,7 @@ export const EditButton = ({
       </PopoverContent>
     </Popover>
   ) : (
-    // 當 sameAuthor 為 false 時（使用者不是作者），只顯示儲存按鈕
+    /* 當 sameAuthor 為 false 時（使用者不是作者），只顯示儲存按鈕 */
     <SaveButton articleId={id} onlyIcon={true} />
   );
 };

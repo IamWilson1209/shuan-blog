@@ -33,7 +33,6 @@ export type ArticleCardProps = {
 
 const ArticleCard = ({
   article,
-  userId,
 }: {
   article: ArticleCardProps;
   userId?: string;
@@ -48,7 +47,6 @@ const ArticleCard = ({
     views,
     _createdAt,
     likes,
-    likedBy,
   } = article;
 
   return (
@@ -58,7 +56,6 @@ const ArticleCard = ({
           id={_id}
           authorId={author?._id}
           deleteArticleAction={deleteArticleAction}
-          // userId={userId}
         />
       </div>
       <div className="flex-between mt-5 gap-5">
