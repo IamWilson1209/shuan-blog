@@ -18,18 +18,15 @@ export const EditButton = ({
   authorId,
   deleteArticleAction,
   userId,
-  initialSavedStatus,
 }: {
   id: string;
   authorId: string | undefined;
   deleteArticleAction: (id: string) => Promise<any>;
   userId: string | undefined;
-  initialSavedStatus: boolean;
 }) => {
   const [isPending, setIsPending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const isLoggedIn = !!userId;
   const sameAuthor = userId === authorId;
 
   const handleDelete = async () => {
@@ -72,24 +69,12 @@ export const EditButton = ({
           >
             <CircleX />
           </Button>
-          <SaveButton
-            articleId={id}
-            userId={userId}
-            initialSavedStatus={initialSavedStatus}
-            isLoggedIn={isLoggedIn}
-            onlyIcon={true}
-          />
+          <SaveButton articleId={id} onlyIcon={true} />
         </div>
       </PopoverContent>
     </Popover>
   ) : (
     // 當 sameAuthor 為 false 時（使用者不是作者），只顯示儲存按鈕
-    <SaveButton
-      articleId={id}
-      userId={userId}
-      initialSavedStatus={initialSavedStatus}
-      isLoggedIn={isLoggedIn}
-      onlyIcon={true}
-    />
+    <SaveButton articleId={id} onlyIcon={true} />
   );
 };

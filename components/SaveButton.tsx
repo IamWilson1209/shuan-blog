@@ -14,19 +14,10 @@ import { handleSaveArticle } from '@/app/redux/save-articles/slice';
 
 type SaveButtonProps = {
   articleId: string;
-  userId: string | null | undefined;
-  initialSavedStatus: boolean;
-  isLoggedIn: boolean;
   onlyIcon: boolean;
 };
 
-const SaveButton = ({
-  articleId,
-  // userId,
-  initialSavedStatus,
-  // isLoggedIn,
-  onlyIcon,
-}: SaveButtonProps) => {
+const SaveButton = ({ articleId, onlyIcon }: SaveButtonProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -38,7 +29,7 @@ const SaveButton = ({
   const savedArticles = useSelector(
     (state: RootState) => state.savedArticles.savedArticles
   );
-  const isSaved = savedArticles[articleId] ?? initialSavedStatus;
+  const isSaved = savedArticles[articleId] ?? false;
 
   /* handle 處裡過程 */
   const [isPending, startTransition] = useTransition();
@@ -55,7 +46,7 @@ const SaveButton = ({
         /* 發送server action儲存文章 */
         const result = await saveArticle(articleId);
 
-        /* 利用redux更新全局狀態 */
+        /* 發送redux更新全局狀態 */
         dispatch(handleSaveArticle({ articleId, isSaved: result.isSaved }));
 
         /* toast出通知顯示給使用者 */

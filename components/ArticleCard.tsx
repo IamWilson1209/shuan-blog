@@ -29,18 +29,14 @@ export type ArticleCardProps = {
   image?: string;
   likes?: number;
   likedBy?: string[];
-  initialSavedStatus?: boolean;
-  saveStatus?: boolean;
 };
 
 const ArticleCard = ({
   article,
   userId,
-  initialSavedStatus,
 }: {
   article: ArticleCardProps;
   userId?: string;
-  initialSavedStatus: boolean;
 }) => {
   const {
     title,
@@ -66,7 +62,6 @@ const ArticleCard = ({
           authorId={author?._id}
           deleteArticleAction={deleteArticleAction}
           userId={userId}
-          initialSavedStatus={initialSavedStatus}
         />
       </div>
       <div className="flex-between mt-5 gap-5">

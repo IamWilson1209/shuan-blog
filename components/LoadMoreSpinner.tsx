@@ -54,12 +54,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
       <ul className="mt-5 card_grid pb-8">
         {articles.length > 0 ? (
           articles.map((article: ArticleCardProps) => (
-            <ArticleCard
-              key={article?._id}
-              article={article}
-              userId={userId}
-              initialSavedStatus={article?.initialSavedStatus}
-            />
+            <ArticleCard key={article?._id} article={article} userId={userId} />
           ))
         ) : (
           <p className="no-results">No articles found</p>

@@ -9,6 +9,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ReduxProvider } from '@/providers/redux-provider';
+import { ReduxInitializer } from '@/components/ReduxInitializer';
 
 const workSans = localFont({
   src: [
@@ -91,6 +92,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <SessionProvider>
+              <ReduxInitializer />
               {children}
               <Analytics />
               <GoogleTagManager gtmId="GTM-P98XJMMN" />
