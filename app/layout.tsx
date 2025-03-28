@@ -8,6 +8,7 @@ import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { ReduxProvider } from '@/providers/redux-provider';
 
 const workSans = localFont({
   src: [
@@ -82,20 +83,22 @@ export default function RootLayout({
     */
     <html lang="en" suppressHydrationWarning>
       <body className={`${workSans.variable} `}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SessionProvider>
-            {children}
-            <Analytics />
-            <GoogleTagManager gtmId="GTM-P98XJMMN" />
-            <GoogleAnalytics gaId="G-38FPHRNTCG" />
-            <Toaster position="bottom-left" closeButton richColors />
-          </SessionProvider>
-        </ThemeProvider>
+        <ReduxProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SessionProvider>
+              {children}
+              <Analytics />
+              <GoogleTagManager gtmId="GTM-P98XJMMN" />
+              <GoogleAnalytics gaId="G-38FPHRNTCG" />
+              <Toaster position="bottom-left" closeButton richColors />
+            </SessionProvider>
+          </ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

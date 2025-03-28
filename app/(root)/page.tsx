@@ -3,9 +3,9 @@ import { SanityLive } from '@/sanity/lib/live';
 import LoadMoreSpinner from '@/components/LoadMoreSpinner';
 import { fetchArticlesAction } from '@/actions/server-actions';
 import { SquarePen } from 'lucide-react';
-
 import type { Metadata } from 'next';
 import { openGraphImage } from '../shared-metadata';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: `Ex* | Shuan's blog | shuan.ltd | www.shuan.ltd`,
@@ -45,10 +45,12 @@ export default async function Home({
               : 'Public Playground'}
           </p>
         </div>
-        <LoadMoreSpinner
-          initialArticles={initialArticles}
-          searchQuery={query}
-        />
+        <Suspense fallback={<div>Loading articles...</div>}>
+          <LoadMoreSpinner
+            initialArticles={initialArticles}
+            searchQuery={query}
+          />
+        </Suspense>
       </section>
       <SanityLive />
     </>

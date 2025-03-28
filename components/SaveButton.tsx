@@ -7,6 +7,10 @@ import { Button } from './ui/button';
 import { saveArticle } from '@/actions/server-actions';
 import { toast } from 'sonner';
 import { sendGTMEvent } from '@next/third-parties/google';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSession } from 'next-auth/react';
+import { RootState } from '@/app/redux/stores';
+import { handleSaveArticle } from '@/app/redux/save-articles/slice';
 
 type SaveButtonProps = {
   articleId: string;
@@ -18,31 +22,51 @@ type SaveButtonProps = {
 
 const SaveButton = ({
   articleId,
-  userId,
+  // userId,
   initialSavedStatus,
-  isLoggedIn,
+  // isLoggedIn,
   onlyIcon,
 }: SaveButtonProps) => {
-  const [isSaved, setIsSaved] = useState(initialSavedStatus);
-  const [isPending, startTransition] = useTransition();
+  const dispatch = useDispatch();
   const router = useRouter();
 
+  /* 取得使用者的登入狀態 */
+  const { data: session } = useSession();
+  const userId = session?.id;
+
+  /* 取得此篇文章的儲存狀態 */
+  const savedArticles = useSelector(
+    (state: RootState) => state.savedArticles.savedArticles
+  );
+  const isSaved = savedArticles[articleId] ?? initialSavedStatus;
+
+  /* handle 處裡過程 */
+  const [isPending, startTransition] = useTransition();
+
   const handleToggleSave = async () => {
-    if (!isLoggedIn) {
+    if (!userId) {
+      /* 待修正 */
       router.push('/login');
       return;
     }
 
     startTransition(async () => {
       try {
+        /* 發送server action儲存文章 */
         const result = await saveArticle(articleId);
-        setIsSaved(result.isSaved);
+
+        /* 利用redux更新全局狀態 */
+        dispatch(handleSaveArticle({ articleId, isSaved: result.isSaved }));
+
+        /* toast出通知顯示給使用者 */
         toast.success(
           result.isSaved ? 'Article has been saved' : 'Article has beed unsaved'
         );
+
+        /* 發送Google Analytics Event */
         sendGTMEvent({
-          event: 'likeButtonClicked', // 自訂事件名稱
-          value: result.isSaved ? 'saved' : 'unSaved', // 根據按讚狀態傳送不同值
+          event: 'saveButtonClicked', // 事件名稱
+          value: result.isSaved ? 'saved' : 'unSaved', // 根據儲存狀態傳送不同值
           articleId: articleId, // 傳送文章 ID
         });
       } catch (error) {

@@ -29,8 +29,8 @@ export type ArticleCardProps = {
   image?: string;
   likes?: number;
   likedBy?: string[];
-  initialSavedStatus?: boolean; // 可選，UserPage 使用
-  saveStatus?: boolean; // 可選，其他頁面使用
+  initialSavedStatus?: boolean;
+  saveStatus?: boolean;
 };
 
 const ArticleCard = ({
