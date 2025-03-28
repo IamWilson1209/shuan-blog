@@ -25,7 +25,7 @@ const SaveButton = ({ articleId, onlyIcon }: SaveButtonProps) => {
   const { data: session } = useSession();
   const userId = session?.id;
 
-  /* 取得此篇文章的儲存狀態 */
+  /* Redux取得此篇文章的儲存狀態 */
   const savedArticles = useSelector(
     (state: RootState) => state.savedArticles.savedArticles
   );

@@ -30,6 +30,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
     if (inView && hasMore) {
       setIsLoading(true);
 
+      /* 設定delay，不然會持續處於Loading狀態 */
       const delay = 500;
       const timeoutId = setTimeout(async () => {
         const newArticles = await fetchArticlesAction(

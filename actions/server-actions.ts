@@ -193,23 +193,8 @@ export const fetchArticlesAction = async (page: number, sanityQuery?: string | s
       sanityQuery: sanityQuery || null,
     });
 
-    /* 如果使用者沒有登入，直接返回獲取的文章 */
-    if (!userId) {
-      return articles;
-    }
-
-    /* 如果有登入，還要回傳儲存狀態，查詢使用者儲存文章列表 */
-    const userData = await client.withConfig({ useCdn: false }).fetch(GET_ARTICLES_SAVE_STATUS_BY_USER_ID, { userId });
-    const savedArticleIds = userData.savedArticles || [];
-
-    /* 整合儲存狀態到article */
-    const articlesWithSaveStatus = articles.map((article: Article) => ({
-      ...article,
-      saveStatus: savedArticleIds.includes(article._id)
-    }))
-
     /* 回傳取得的articles */
-    return articlesWithSaveStatus;
+    return articles;
   } catch (error) {
     console.error(`Server: Error fetching page ${page}:`, error);
     return parseServerActionResponse({

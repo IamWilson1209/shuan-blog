@@ -23,6 +23,8 @@ export default async function Home({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const query = (await searchParams).query;
+
+  /* 取得第一頁的文章資料 */
   const initialArticles = await fetchArticlesAction(1, query);
 
   return (
