@@ -72,17 +72,18 @@ const SaveButton = ({ articleId, onlyIcon }: SaveButtonProps) => {
       onClick={handleToggleSave}
       disabled={isPending}
       variant={onlyIcon ? 'nothing' : 'outline'}
-      className={`flex gap-2 text-[15px] ${onlyIcon ? '' : 'w-30 h-12'}`}
+      className={`flex gap-2 text-[15px] hover:text-gray-300 ${onlyIcon ? '' : 'w-30 h-12'}`}
     >
-      {isSaved ? (
-        <BookmarkIcon
-          className="text-black dark:text-white-100/80"
-          fill="currentColor"
-          stroke="none"
-        />
-      ) : (
-        <BookmarkIcon size={24} />
-      )}
+      <BookmarkIcon
+        size={24}
+        className={`transition-colors ${
+          isPending
+            ? 'text-gray-400 animate-pulse' // 更新中顯示灰色並閃爍
+            : isSaved
+              ? 'text-black dark:text-white-100/80 fill-current stroke-none'
+              : 'text-gray-600'
+        }`}
+      />
       {onlyIcon ? null : isSaved ? (
         <p className="pr-1">Saved</p>
       ) : (
