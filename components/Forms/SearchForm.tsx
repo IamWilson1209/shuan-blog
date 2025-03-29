@@ -2,7 +2,7 @@
 
 import Form from 'next/form';
 import { Search } from 'lucide-react';
-import SearchFormReset from './SearchFormReset';
+import SearchFormReset from './Buttons/SearchFormReset';
 import { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 

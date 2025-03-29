@@ -6,9 +6,9 @@ import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
-import { EditButton } from './EditButton';
+import { EditButton } from './Buttons/EditButton';
 import { deleteArticleAction } from '@/actions/server-actions';
-import { LikeButton } from './LikeButton';
+import { LikeButton } from './Buttons/LikeButton';
 
 /* 
   Omit<Type, Keys>

@@ -1,4 +1,4 @@
-import PromptSuggestionButton from './PromptSuggestionButton';
+import PromptSuggestionButton from './Buttons/PromptSuggestionButton';
 
 const PromptSuggestionsRows = ({ onPromptClick }) => {
   const prompts = [

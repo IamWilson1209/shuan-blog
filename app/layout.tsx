@@ -8,7 +8,7 @@ import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { ReduxProvider } from '@/providers/redux-provider';
+import { ReduxProvider } from '@/providers/ReduxProvider';
 import { ReduxInitializer } from '@/components/ReduxInitializer';
 
 const workSans = localFont({
