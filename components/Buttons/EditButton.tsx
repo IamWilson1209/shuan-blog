@@ -11,7 +11,7 @@ import { Ellipsis, Pencil, CircleX } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import SaveButton from '@/components/SaveButton';
+import SaveButton from '@/components/Buttons/SaveButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/stores';
 

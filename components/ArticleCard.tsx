@@ -1,7 +1,6 @@
 'use client';
 
 import { formatDate } from '@/utils/utils';
-import { Author } from '@/sanity/types';
 import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,6 +8,7 @@ import { Button } from './ui/button';
 import { EditButton } from './Buttons/EditButton';
 import { deleteArticleAction } from '@/actions/server-actions';
 import { LikeButton } from './Buttons/LikeButton';
+import { ArticleCardProps } from '@/types/ArticleCardProps';
 
 /* 
   Omit<Type, Keys>
@@ -16,20 +16,6 @@ import { LikeButton } from './Buttons/LikeButton';
     Keys：要移除的屬性名稱
     &: Intersection Type
 */
-export type ArticleCardProps = {
-  _id: string;
-  title: string;
-  slug?: { _type: 'slug'; current: string };
-  _createdAt?: string;
-  author?: Author | { _id: string; name: string; image: string; bio: string };
-  views?: number;
-  desc?: string;
-  category?: string;
-  content?: string;
-  image?: string;
-  likes?: number;
-  likedBy?: string[];
-};
 
 const ArticleCard = ({ article }: { article: ArticleCardProps }) => {
   const {

@@ -1,4 +1,4 @@
-import SearchForm from '@/components/SearchForm';
+import SearchForm from '@/components/Forms/SearchForm';
 import { SanityLive } from '@/sanity/lib/live';
 import LoadMoreSpinner from '@/components/LoadMoreSpinner';
 import { fetchArticlesAction } from '@/actions/server-actions';

@@ -1,9 +1,8 @@
 import React from 'react';
 import ArticleCard from './ArticleCard';
-import { ArticleWithSaveStatus } from '@/app/(root)/users/[id]/page';
+import { ArticleWithSaveStatus } from '@/types/ArticleWithSaveStatus';
 
 const UserArticles = async ({
-  id,
   articles,
 }: {
   id: string;

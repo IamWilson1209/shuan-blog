@@ -2,7 +2,7 @@
 
 import Form from 'next/form';
 import { Search } from 'lucide-react';
-import SearchFormReset from './Buttons/SearchFormReset';
+import SearchFormResetButton from '../Buttons/SearchFormResetButton';
 import { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -36,7 +36,7 @@ const SearchForm = ({ query }: { query?: string | string[] | undefined }) => {
         placeholder="Search Articles"
       />
       <div className="flex gap-2">
-        {query && <SearchFormReset />}
+        {query && <SearchFormResetButton />}
 
         <button type="submit" className="search-btn text-white">
           <Search className="size-5" />

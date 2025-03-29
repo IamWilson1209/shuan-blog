@@ -12,7 +12,7 @@ import Views from '@/components/Views';
 import { notFound } from 'next/navigation';
 import markdownit from 'markdown-it';
 import { Timer } from 'lucide-react';
-import SaveButton from '@/components/SaveButton';
+import SaveButton from '@/components/Buttons/SaveButton';
 import { LikeButton } from '@/components/Buttons/LikeButton';
 import { Metadata, ResolvingMetadata } from 'next';
 

@@ -2,9 +2,10 @@
 
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
-import ArticleCard, { ArticleCardProps } from './ArticleCard';
+import ArticleCard from './ArticleCard';
 import { fetchArticlesAction } from '@/actions/server-actions';
 import LoadingSkeleton from './LoadingSkeleton';
+import { ArticleCardProps } from '@/types/ArticleCardProps';
 
 interface LoadMoreProps {
   initialArticles: ArticleCardProps[];
