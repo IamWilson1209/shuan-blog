@@ -15,7 +15,7 @@
     "prebuild": "npm run typegen",
     "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watchAll"
   },
   "overrides": {
     "next": "$next"
@@ -85,6 +85,7 @@
     "postcss": "^8",
     "puppeteer": "^24.4.0",
     "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.3.0",
     "ts-node": "^10.9.2",
     "typescript": "^5"
   }
