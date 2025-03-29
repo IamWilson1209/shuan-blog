@@ -4,7 +4,7 @@ import { auth, signOut, signIn } from '@/auth';
 import { Plus, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from './ui/button';
-import { ModeToggle } from './Buttons/DarkModeToggle';
+import { ModeToggle } from './buttons/DarkModeToggle';
 
 const Navbar = async () => {
   const session = await auth();

@@ -1,4 +1,4 @@
-import EmailForm from '@/components/Forms/EmailForm';
+import EmailForm from '@/components/forms/EmailForm';
 import Link from 'next/link';
 import React from 'react';
 import { Mail, Phone } from 'lucide-react';

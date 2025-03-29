@@ -12,8 +12,8 @@ import Views from '@/components/Views';
 import { notFound } from 'next/navigation';
 import markdownit from 'markdown-it';
 import { Timer } from 'lucide-react';
-import SaveButton from '@/components/Buttons/SaveButton';
-import { LikeButton } from '@/components/Buttons/LikeButton';
+import SaveButton from '@/components/buttons/SaveButton';
+import { LikeButton } from '@/components/buttons/LikeButton';
 import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
