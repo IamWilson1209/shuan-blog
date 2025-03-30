@@ -69,7 +69,7 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <section className="flex flex-col items-start mt-5 max-w-7xl mx-auto">
         <h1 className="heading-article">{article?.title}</h1>
         <p className="px-6 sub-heading-article !max-w-5xl">{article?.desc}</p>
-        <div className="flex items-start gap-2 px-6 mt-1">
+        <div className="flex items-start gap-2 px-6 mt-5">
           <Timer
             className="pb-1 text-black-100/80 dark:text-white-100"
             strokeWidth={3}
@@ -102,26 +102,30 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
             </Link>
 
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-1 items-center">
               <p className="category-tag"># {article?.category}</p>
-              <div className="px-2">
+              <div className="">
                 <LikeButton articleId={id} initialLikes={article.likes} />
               </div>
               <SaveButton onlyIcon={false} articleId={id} />
             </div>
           </div>
           <hr className="mt-8" />
-          <img
-            src={article?.image}
-            alt="thumbnail"
-            className="w-full h-auto rounded-xl mb-3"
-          />
+          <div>
+            <Image
+              src={article?.image}
+              alt="thumbnail"
+              width={64}
+              height={64}
+              className="w-full h-auto rounded-xl mb-3"
+            />
+          </div>
 
           <hr className="mt-8" />
 
           {parsedContent ? (
             <article
-              className="prose dark:prose-invert max-w-4xl font-work-sans break-all dark:text-white-100/70"
+              className="prose dark:prose-invert max-w-4xl font-work-sans whitespace-normal dark:text-white-100/70"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (

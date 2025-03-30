@@ -1,5 +1,5 @@
 import { auth } from '@/auth';
-import ArticleEditForm from '@/components/ArticleEditForm';
+import ArticleEditForm from '@/components/forms/ArticleEditForm';
 import ExChatSideBar from '@/components/ExChatSideBar';
 import { redirect } from 'next/navigation';
 
