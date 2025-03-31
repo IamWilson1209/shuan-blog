@@ -16,43 +16,43 @@
   }
 
   .text-30-extrabold {
-    @apply text-[30px] font-extrabold text-black-100/80 dark:text-white-100/80;
+    @apply text-[30px] font-work-sans font-extrabold text-black-100/80 dark:text-white-100/80;
   }
 
   .text-30-bold {
-    @apply text-[40px] font-bold text-black-100/80 dark:text-white-100/80;
+    @apply text-[40px] font-work-sans font-bold text-black-100/80 dark:text-white-100/80;
   }
 
   .text-30-semibold {
-    @apply font-semibold text-[30px] text-black dark:text-white-100/80;
+    @apply font-semibold font-work-sans text-[30px] text-black dark:text-white-100/80;
   }
 
   .text-all-article {
-    @apply px-4 font-bold text-[30px] sm:text-[50px] text-black dark:text-white-100/70;
+    @apply px-4 font-bold font-work-sans text-[30px] sm:text-[50px] text-black dark:text-white-100/70;
   }
 
   .text-26-semibold {
-    @apply font-semibold text-[26px] text-black dark:text-white-100/80;
+    @apply font-semibold font-work-sans text-[26px] text-black dark:text-white-100/80;
   }
 
   .text-24-black {
-    @apply text-[24px] font-black text-black dark:text-white-100/80;
+    @apply text-[24px] font-black font-work-sans text-black dark:text-white-100/80;
   }
 
   .text-24-medium {
-    @apply font-semibold text-[24px] text-black dark:text-white-100/80;
+    @apply font-semibold font-work-sans text-[24px] text-black dark:text-white-100/80;
   }
 
   .text-20-medium {
-    @apply font-medium text-[20px] text-black dark:text-white-100/80;
+    @apply font-medium font-work-sans text-[20px] text-black dark:text-white-100/80;
   }
 
   .text-16-medium {
-    @apply font-medium text-[16px] text-black dark:text-white-100/80;
+    @apply font-medium font-work-sans text-[16px] text-black dark:text-white-100/80;
   }
 
   .text-14-normal {
-    @apply font-normal text-sm  text-black dark:text-white-100/80;
+    @apply font-normal font-work-sans text-sm  text-black dark:text-white-100/80;
   }
 
   .global_background {
@@ -149,7 +149,7 @@
   }
 
   .section_container_article_page {
-    @apply px-6 max-w-7xl mx-auto;
+    @apply px-6 max-w-4xl mx-auto;
   }
 
   .card_grid {
@@ -232,7 +232,7 @@
   }
 
   .article-page-btn {
-    @apply rounded-full bg-black dark:bg-black-100 font-medium text-[14px] text-white px-5 py-3 !important;
+    @apply rounded-full bg-black dark:bg-black-100 font-medium text-[12px] md:text-[14px] text-white px-5 py-3 !important;
   }
 
   .article-page-skeleton {

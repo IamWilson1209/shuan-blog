@@ -32,7 +32,7 @@ const Navbar = async () => {
               </p>
             </Link>
           </Button>
-          <div className="sm:pr-5 dark:text-white-100/80">
+          <div className="md:pr-5 dark:text-white-100/80">
             <ModeToggle />
           </div>
           {session && session?.user ? (
