@@ -23,6 +23,7 @@ const baseConfig: Config = {
       tsconfig: '<rootDir>/tsconfig.json',
     }],
   },
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'], // 確保在環境初始化後運行
 };
 
 const serverActionsConfig: Config = {
