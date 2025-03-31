@@ -2,6 +2,7 @@ import { auth } from '@/auth';
 import ArticleEditForm from '@/components/forms/ArticleEditForm';
 import ExChatSideBar from '@/components/ExChatSideBar';
 import { redirect } from 'next/navigation';
+import SlideInFromLeftAnimation from '@/components/animations/SlideInFromLeftAnimation ';
 
 const CreatePage = async () => {
   const session = await auth();
@@ -10,8 +11,10 @@ const CreatePage = async () => {
 
   return (
     <div className="relative min-h-screen flex flex-col md:flex-row">
-      <div className="w-full md:w-1/3 lg:w-1/4 bg-white-100 dark:bg-black-200 border-r border-gray-200 dark:border-gray-700/30 md:fixed md:h-screen md:overflow-y-auto">
-        <ExChatSideBar />
+      <div className="w-full md:w-1/3 lg:w-1/4 bg-white-100 dark:bg-black-200 md:fixed md:h-screen md:overflow-y-auto">
+        <SlideInFromLeftAnimation>
+          <ExChatSideBar />
+        </SlideInFromLeftAnimation>
       </div>
 
       <div className="w-full md:w-2/3 lg:w-3/4 md:ml-[33%] lg:ml-[25%] p-4">
