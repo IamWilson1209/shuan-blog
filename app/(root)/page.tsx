@@ -44,7 +44,7 @@ export default async function Home({
 
       <section className="section_container">
         <div className="flex justify-start items-center pl-4">
-          <SquarePen width={45} height={45} />
+          <SquarePen className="size-[30px] sm:size-[40px] dark:text-white-100/70" />
           <SlideInFromLeftAnimation>
             <p className="text-all-article">
               {query
@@ -54,12 +54,10 @@ export default async function Home({
           </SlideInFromLeftAnimation>
         </div>
         <Suspense fallback={<div>Loading articles...</div>}>
-          {/* <SlideInFromLeftAnimation> */}
           <LoadMoreSpinner
             initialArticles={initialArticles}
             searchQuery={query}
           />
-          {/* </SlideInFromLeftAnimation> */}
         </Suspense>
       </section>
       <SanityLive />

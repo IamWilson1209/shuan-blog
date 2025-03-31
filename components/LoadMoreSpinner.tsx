@@ -56,7 +56,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
             <ArticleCard key={article?._id} article={article} />
           ))
         ) : (
-          <p className="no-results">No articles found</p>
+          <p className="no_results">No articles found</p>
         )}
       </ul>
       <hr />

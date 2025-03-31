@@ -30,7 +30,7 @@ const ExChatHome = () => {
   return (
     <main className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto pb-4 px-2">
-        <section className="w-full max-w-2xl mx-auto bg-white-100/80 dark:bg-black-200/80 dark:text-white-100/80 rounded-lg shadow-lg p-6 space-y-4 flex flex-col h-[calc(100vh-200px)] md:h-auto">
+        <section className="w-full max-w-2xl mx-auto bg-white-100 dark:bg-black-200/80 dark:text-white-100/80 rounded-lg p-6 space-y-4 flex flex-col h-[calc(100vh-200px)] md:h-auto">
           {noMessage ? (
             <>
               <p className="text-gray-600 text-center">

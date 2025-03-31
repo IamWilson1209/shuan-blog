@@ -8,6 +8,8 @@ import UserArticles from '@/components/UserArticles';
 import LoadingSkeleton from '@/components/LoadingSkeleton';
 import { Metadata, ResolvingMetadata } from 'next';
 import { fetchUserPageDataAction } from '@/actions/server-actions';
+import FadeInAnimation from '@/components/animations/FadeInAnimation';
+import SlideInFromLeftAnimation from '@/components/animations/SlideInFromLeftAnimation ';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -48,39 +50,43 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <section className="profile_container">
-      <div className="profile_card">
-        <Image
-          src={user.image}
-          alt={user.name}
-          width={400}
-          height={400}
-          className="profile_image"
-        />
+      <FadeInAnimation>
+        <div className="profile_card">
+          <Image
+            src={user.image}
+            alt={user.name}
+            width={400}
+            height={400}
+            className="profile_image"
+          />
 
-        <div className="flex flex-col items-center mt-5">
-          <h3 className="text-24-black uppercase text-center line-clamp-1">
-            {user.name}
-          </h3>
+          <div className="flex flex-col items-center mt-5">
+            <h3 className="text-24-black uppercase text-center line-clamp-1">
+              {user.name}
+            </h3>
+          </div>
+
+          <p className="text-30-extrabold text-center">@{user?.username}</p>
+          <p className="text-20-medium text-center">{user?.email}</p>
+          <p className="mt-1 text-center text-14-normal dark:text-white-100/80">
+            {user?.bio}
+          </p>
         </div>
+      </FadeInAnimation>
 
-        <p className="text-30-extrabold text-center">@{user?.username}</p>
-        <p className="text-20-medium text-center">{user?.email}</p>
-        <p className="mt-1 text-center text-14-normal dark:text-white-100/80">
-          {user?.bio}
-        </p>
-      </div>
-
-      <div className="flex-1 flex flex-col lg:-mt-5">
-        <p className="text-30-bold pl-4">
-          {session?.id === id ? 'Your' : 'All'} Articles
-        </p>
-        <hr className="my-4 border-black-100/20" />
-        <ul className="card_grid-sm">
-          <Suspense fallback={<ArticleLoading />}>
-            <UserArticles id={id} articles={articles} />
-          </Suspense>
-        </ul>
-      </div>
+      <SlideInFromLeftAnimation>
+        <div className="flex-1 flex flex-col lg:-mt-5">
+          <p className="text-30-bold pl-4">
+            {session?.id === id ? 'Your' : 'All'} Articles
+          </p>
+          <hr className="my-4 border-black-100/20" />
+          <ul className="card_grid-sm">
+            <Suspense fallback={<ArticleLoading />}>
+              <UserArticles id={id} articles={articles} />
+            </Suspense>
+          </ul>
+        </div>
+      </SlideInFromLeftAnimation>
     </section>
   );
 };

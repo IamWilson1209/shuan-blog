@@ -44,12 +44,12 @@ const ArticleCard = ({ article }: { article: ArticleCardProps }) => {
         <div className="flex-between mt-5 gap-5">
           <div className="flex-1">
             <Link href={`/articles/${_id}`}>
-              <h3 className="text-26-semibold line-clamp-1 dark:text-white-100/80 dark:hover:hover:underline dark:hover:text-blue-600/80 hover:underline hover:text-blue-600/80">
+              <h3 className="text-20-medium md:text-20-medium xl:text-16-medium tracking-tight line-clamp-1 dark:text-white-100/80 dark:hover:hover:underline dark:hover:text-blue-600/80 hover:underline hover:text-blue-600/80">
                 {title}
               </h3>
             </Link>
             <Link href={`/users/${author?._id}`}>
-              <p className="text-16-medium line-clamp-1">
+              <p className="text-14-normal line-clamp-1">
                 Author : {author?.name}
               </p>
             </Link>
@@ -64,7 +64,7 @@ const ArticleCard = ({ article }: { article: ArticleCardProps }) => {
             />
           </Link>
         </div>
-        <div className="flex-between mt-5">
+        <div className="flex-between mt-2 md:mt-5">
           <p className="article-page-date">{formatDate(_createdAt)}</p>
           <div className="flex-between gap-1.5">
             <div className="flex gap-1.5">
@@ -80,7 +80,7 @@ const ArticleCard = ({ article }: { article: ArticleCardProps }) => {
         </Link>
         <div className="flex-between gap-3 mt-5">
           <Link href={`/?query=${category?.toLowerCase()}`}>
-            <p className="text-16-medium"># {category}</p>
+            <p className="text-14-normal"># {category}</p>
           </Link>
           <Button className="article-page-btn" asChild>
             <Link href={`/articles/${_id}`}>Details</Link>

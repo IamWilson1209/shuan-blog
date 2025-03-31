@@ -16,43 +16,43 @@
   }
 
   .text-30-extrabold {
-    @apply text-[30px] font-extrabold text-black-100/80 dark:text-white-100/80;
+    @apply text-[30px] font-work-sans font-extrabold text-black-100/80 dark:text-white-100/80;
   }
 
   .text-30-bold {
-    @apply text-[40px] font-bold text-black-100/80 dark:text-white-100/80;
+    @apply text-[40px] font-work-sans font-bold text-black-100/80 dark:text-white-100/80;
   }
 
   .text-30-semibold {
-    @apply font-semibold text-[30px] text-black dark:text-white-100/80;
+    @apply font-semibold font-work-sans text-[30px] text-black dark:text-white-100/80;
   }
 
   .text-all-article {
-    @apply px-4 font-bold text-[50px] text-black dark:text-white-100/70;
+    @apply px-4 font-bold font-work-sans text-[30px] sm:text-[50px] text-black dark:text-white-100/70;
   }
 
   .text-26-semibold {
-    @apply font-semibold text-[26px] text-black dark:text-white-100/80;
+    @apply font-semibold font-work-sans text-[26px] text-black dark:text-white-100/80;
   }
 
   .text-24-black {
-    @apply text-[24px] font-black text-black dark:text-white-100/80;
+    @apply text-[24px] font-black font-work-sans text-black dark:text-white-100/80;
   }
 
   .text-24-medium {
-    @apply font-semibold text-[24px] text-black dark:text-white-100/80;
+    @apply font-semibold font-work-sans text-[24px] text-black dark:text-white-100/80;
   }
 
   .text-20-medium {
-    @apply font-medium text-[20px] text-black dark:text-white-100/80;
+    @apply font-medium font-work-sans text-[20px] text-black dark:text-white-100/80;
   }
 
   .text-16-medium {
-    @apply font-medium text-[16px] text-black dark:text-white-100/80;
+    @apply font-medium font-work-sans text-[16px] text-black dark:text-white-100/80;
   }
 
   .text-14-normal {
-    @apply font-normal text-sm text-black-100/80;
+    @apply font-normal font-work-sans text-sm  text-black dark:text-white-100/80;
   }
 
   .global_background {
@@ -121,7 +121,7 @@
   }
 
   .tag {
-    @apply font-work-sans font-medium rounded-sm uppercase relative max-w-[300px];
+    @apply font-work-sans font-medium rounded-sm text-[14px] sm:text-[16px] uppercase relative max-w-[300px];
   }
 
   .heading {
@@ -129,15 +129,15 @@
   }
 
   .heading-article {
-    @apply px-6 pt-3 font-work-sans font-bold text-black dark:text-white-100/90 sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] mt-5 mb-1;
+    @apply px-6 pt-3 font-work-sans font-bold text-black dark:text-white-100/90 sm:text-[40px] text-[30px] sm:leading-[40px] leading-[36px] mt-5 mb-1;
   }
 
   .sub-heading {
-    @apply font-medium text-[30px] text-white-100/70 max-w-2xl break-words;
+    @apply font-medium text-[15px] sm:text-[20px] md:text-[30px] text-white-100/70 max-w-2xl break-words;
   }
 
   .sub-heading-article {
-    @apply font-semibold text-[30px] text-black-200/60 dark:text-white-100/60 max-w-2xl break-words;
+    @apply font-semibold text-[20px] text-black-200/60 dark:text-white-100/60 max-w-2xl break-words;
   }
 
   .idea {
@@ -149,22 +149,21 @@
   }
 
   .section_container_article_page {
-    @apply px-6 max-w-7xl mx-auto;
+    @apply px-6 max-w-4xl mx-auto;
   }
 
   .card_grid {
-    @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
+    @apply grid lg:grid-cols-2 xl:grid-cols-3 gap-5;
   }
 
   .card_grid-sm {
     @apply grid sm:grid-cols-2 gap-1;
   }
 
-  .no-result {
+  .no_result {
     @apply text-black-100 text-sm font-normal;
   }
 
-  /* profile */
   .profile_container {
     @apply w-full pb-10 pt-20 px-6 max-w-7xl mx-auto lg:flex-row flex-col flex gap-10;
   }
@@ -205,7 +204,7 @@
 
   /* searchform */
   .search-form {
-    @apply max-w-3xl w-full min-h-[80px] bg-white dark:border-black-100/25 border-[4px] border-white-100 dark:bg-zinc-800 rounded-[10px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
+    @apply max-w-3xl w-full min-h-[70px] max-h-[80px] bg-white dark:border-black-100/25 border-[4px] border-white-100 dark:bg-zinc-800 rounded-[10px] text-[16px] sm:text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
   }
 
   .search-input {
@@ -216,17 +215,16 @@
     @apply size-[50px] rounded-full bg-black flex justify-center items-center !important;
   }
 
-  /* startupcard */
   .article-page-card {
-    @apply bg-white dark:bg-zinc-900 dark:text-white-100/80 border-collapse py-6 px-6 rounded-[22px] hover:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all duration-500 ease-in-out;
+    @apply bg-white md:min-h-[300px] lg:min-h-[500px] dark:bg-zinc-900 dark:text-white-100/80 border-collapse py-6 px-6 rounded-[22px] hover:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all duration-500 ease-in-out;
   }
 
   .article-page-date {
-    @apply font-medium text-[16px] py-2 rounded-full;
+    @apply font-medium text-[14px] md:text-[16px] py-2 rounded-full;
   }
 
   .article-page-desc {
-    @apply font-normal text-[16px] line-clamp-2 my-3 text-black-100 break-all dark:text-white-100/80;
+    @apply font-normal text-[14px] md:text-[16px] line-clamp-2 my-3 text-black-100 whitespace-normal dark:text-white-100/80;
   }
 
   .article-page-img {
@@ -234,7 +232,7 @@
   }
 
   .article-page-btn {
-    @apply rounded-full bg-black-200 font-medium text-[16px] text-white px-5 py-3 !important;
+    @apply rounded-full bg-black dark:bg-black-100 font-medium text-[12px] md:text-[14px] text-white px-5 py-3 !important;
   }
 
   .article-page-skeleton {
@@ -279,7 +277,7 @@
   }
 
   .category-tag {
-    @apply font-normal text-[15px] px-3 py-3 bg-black-200 text-white rounded-sm;
+    @apply font-normal text-[12px] sm:text-[15px] px-3 py-3 text-black dark:text-gray-300 rounded-sm;
   }
 
   .logout-button {

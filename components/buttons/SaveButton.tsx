@@ -88,7 +88,7 @@ const SaveButton = ({ articleId, onlyIcon }: SaveButtonProps) => {
     <Button
       onClick={handleSave}
       disabled={isPending}
-      variant={onlyIcon ? 'nothing' : 'outline'}
+      variant={'nothing'}
       className={`flex gap-2 text-[15px] hover:text-gray-300 ${onlyIcon ? '' : 'w-30 h-12'}`}
     >
       <BookmarkIcon
@@ -102,9 +102,9 @@ const SaveButton = ({ articleId, onlyIcon }: SaveButtonProps) => {
         }`}
       />
       {onlyIcon ? null : isSaved ? (
-        <p className="pr-1">Saved</p>
+        <p className="pr-1 hidden md:block">Saved</p>
       ) : (
-        <p className="pr-1">Save</p>
+        <p className="pr-1 hidden md:block">Save</p>
       )}
     </Button>
   );

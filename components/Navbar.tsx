@@ -32,14 +32,14 @@ const Navbar = async () => {
               </p>
             </Link>
           </Button>
-          <div className="pr-5 dark:text-white-100/80">
+          <div className="md:pr-5 dark:text-white-100/80">
             <ModeToggle />
           </div>
           {session && session?.user ? (
             <>
               <Link href={`/articles/create`}>
                 <Button className="create-button max-md:hidden">Create</Button>
-                <Plus className="size-8 mx-2 bg-black-200 text-white-100 rounded-full p-1 border-black hover:bg-black hover:text-white md:hidden transition-colors duration-150" />
+                <Plus className="size-8 mx-2  text-dark-100/80 dark:text-white-100 rounded-full p-1 border-black hover:bg-black hover:text-white md:hidden transition-colors duration-150" />
               </Link>
 
               <form
@@ -50,7 +50,7 @@ const Navbar = async () => {
                 }}
               >
                 <button type="submit">
-                  <LogOut className="size-8 mx-2 md:hidden text-red-800 mt-2" />
+                  <LogOut className="size-6 mx-2 md:hidden text-red-800 mt-2" />
                 </button>
                 <Button className="logout-button max-md:hidden">Logout</Button>
               </form>
