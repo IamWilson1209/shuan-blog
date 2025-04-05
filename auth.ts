@@ -15,7 +15,7 @@ interface GitHubProfile {
   使用者點擊「 GitHub 登入」
   GitHub 驗證成功後，傳回 profile 和 access token 給 NextAuth
   signIn 回調：檢查資料並寫入 Sanity
-  jwt 回調：產生 JWT，加入 Sanity 的 _id，存入 cookie
+  jwt 回調：傳遞使用者資訊到前端。儲存使用者身分資訊（包括 Sanity _id），並且在每次請求中通過 cookie 或 HTTP 標頭傳遞
   session 回調：將 _id 放入 session，讓前端存取
   前端透過 useSession 拿到包含 _id 的 session 資料
 */

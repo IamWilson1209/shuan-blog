@@ -59,6 +59,7 @@ const SaveButton = ({ articleId, onlyIcon }: SaveButtonProps) => {
         /* 發送server action儲存文章 */
         const result = await saveArticle(articleId);
 
+        /* 檢查是否成功才可以更新全局狀態 */
         /* 發送redux更新全局狀態 */
         dispatch(handleSaveArticle({ articleId, isSaved: result.isSaved }));
 
