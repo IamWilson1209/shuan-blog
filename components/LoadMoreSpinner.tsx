@@ -2,9 +2,10 @@
 
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useRef, useState } from 'react';
-import ArticleCard, { ArticleCardProps } from './ArticleCard';
+import ArticleCard from './ArticleCard';
 import { fetchArticlesAction } from '@/actions/server-actions';
 import LoadingSkeleton from './LoadingSkeleton';
+import { ArticleCardProps } from '@/types/ArticleCardProps';
 
 interface LoadMoreProps {
   initialArticles: ArticleCardProps[];
@@ -55,7 +56,7 @@ function LoadMoreSpinner({ initialArticles, searchQuery }: LoadMoreProps) {
             <ArticleCard key={article?._id} article={article} />
           ))
         ) : (
-          <p className="no-results">No articles found</p>
+          <p className="no_results">No articles found</p>
         )}
       </ul>
       <hr />

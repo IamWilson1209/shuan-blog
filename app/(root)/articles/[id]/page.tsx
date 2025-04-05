@@ -12,8 +12,8 @@ import Views from '@/components/Views';
 import { notFound } from 'next/navigation';
 import markdownit from 'markdown-it';
 import { Timer } from 'lucide-react';
-import SaveButton from '@/components/SaveButton';
-import { LikeButton } from '@/components/LikeButton';
+import SaveButton from '@/components/buttons/SaveButton';
+import { LikeButton } from '@/components/buttons/LikeButton';
 import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
@@ -66,10 +66,10 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <>
-      <section className="flex flex-col items-start mt-5 max-w-7xl mx-auto">
+      <section className="flex flex-col items-start mt-5 max-w-4xl mx-auto">
         <h1 className="heading-article">{article?.title}</h1>
         <p className="px-6 sub-heading-article !max-w-5xl">{article?.desc}</p>
-        <div className="flex items-start gap-2 px-6 mt-1">
+        <div className="flex items-start gap-2 px-6 mt-5">
           <Timer
             className="pb-1 text-black-100/80 dark:text-white-100"
             strokeWidth={3}
@@ -79,7 +79,7 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
       </section>
 
       <section className="section_container_article_page">
-        <div className="space-y-5 mt-5 max-w-7xl mx-auto">
+        <div className="space-y-5 mt-5 max-w-4xl mx-auto">
           <hr />
           <div className="flex-between gap-5">
             <Link
@@ -102,26 +102,30 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
             </Link>
 
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-1 items-center">
               <p className="category-tag"># {article?.category}</p>
-              <div className="px-2">
+              <div className="">
                 <LikeButton articleId={id} initialLikes={article.likes} />
               </div>
               <SaveButton onlyIcon={false} articleId={id} />
             </div>
           </div>
           <hr className="mt-8" />
-          <img
-            src={article?.image}
-            alt="thumbnail"
-            className="w-full h-auto rounded-xl mb-3"
-          />
+          <div className="flex items-center justify-center">
+            <Image
+              src={article?.image}
+              alt="thumbnail"
+              width={64}
+              height={64}
+              className="w-full md:w-10/12 lg:w-8/12 h-auto rounded-lg mb-3"
+            />
+          </div>
 
-          <hr className="mt-8" />
+          <hr className="mt-8 " />
 
           {parsedContent ? (
             <article
-              className="prose dark:prose-invert max-w-4xl font-work-sans break-all dark:text-white-100/70"
+              className="mx-auto prose dark:prose-invert max-w-4xl font-work-sans font-normal tracking-normal leading-snug whitespace-normal dark:text-white-100/70"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (
@@ -145,6 +149,14 @@ const ArticlePage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         )} */}
 
+        <section>
+          <p className="text-30-semibold"></p>
+          <ul className="mt-7 card_grid-sm">
+            {/* {relatedPosts.map((post: ArticlePageType, i: number) => (
+            <ArticlePage key={i} article={article} />
+          ))} */}
+          </ul>
+        </section>
         <Suspense fallback={<Skeleton className="view_skeleton" />}>
           <Views id={id} />
         </Suspense>

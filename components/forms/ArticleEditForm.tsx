@@ -1,21 +1,21 @@
 'use client';
 
 import React, { useState, useActionState, useEffect } from 'react';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
+import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { Send } from 'lucide-react';
 import { formSchema } from '@/schema/article-edit-form-validation';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { toast } from 'sonner';
-import { ArticleCardProps } from './ArticleCard';
 import {
   createArticleAction,
   updateArticleAction,
 } from '@/actions/server-actions';
 import Image from 'next/image';
+import { ArticleCardProps } from '@/types/ArticleCardProps';
 
 const ArticleEditForm = ({ article }: { article?: ArticleCardProps }) => {
   const [content, setContent] = useState(article?.content || '');

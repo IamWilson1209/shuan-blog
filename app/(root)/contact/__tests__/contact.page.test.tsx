@@ -7,7 +7,7 @@ import { openGraphImage } from '@/app/shared-metadata';
 describe('Contact Page', () => {
   it('renders contact information correctly', () => {
     render(<ContactPage />);
-    expect(screen.getByText('Wei-Shiuan Lee')).toBeInTheDocument();
+    expect(screen.getByText('Contact Me')).toBeInTheDocument();
   });
 });
 
